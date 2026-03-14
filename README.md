@@ -1,2 +1,2 @@
-# KI-f-r-Lehrkr-fte-
+# KI für-Lehrkr-fte-
 Praktische Tipps für den Einsatz von KI im Unterricht.
