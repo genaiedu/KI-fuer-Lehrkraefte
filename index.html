@@ -92,42 +92,34 @@
     .card-expanded b { color: var(--accent3); }
     .card-expanded h4 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 1.2rem 0 0.6rem; }
 
-    /* ── TOOLS GRID ── */
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+    /* ── GRIDS ── */
+    .tips-grid, .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
+    .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+    
     .tool-meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
-
-    /* ── TIPS GRID ── */
-    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
     .tip-num { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
     .tip-tag { display: inline-block; margin-top: 1rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.2rem 0.7rem; background: rgba(61,174,212,0.12); color: var(--accent); border-radius: 20px; text-transform: uppercase; }
     .tip-refs { display: flex; flex-direction: column; gap: 0.4rem; }
     .tip-refs a { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(26,111,181,0.3); padding-bottom: 0.1rem; align-self: flex-start; }
 
-    /* ── MATERIALS ── */
-    .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
     .material-card { display: flex; flex-direction: column; gap: 0.8rem; text-decoration: none; color: inherit; transition: transform 0.25s, box-shadow 0.25s; }
     .material-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(20,60,110,0.14); }
     .material-type { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); }
-    .material-link { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid rgba(26,111,181,0.35); padding-bottom: 0.1rem; align-self: flex-start; }
+    .material-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid rgba(26,111,181,0.35); padding-bottom: 0.1rem; align-self: flex-start; }
 
-    /* ── STUDIES ── */
     .studies-list { display: flex; flex-direction: column; gap: 1rem; }
-    .study-card { display: grid; grid-template-columns: 3rem 1fr; gap: 1.2rem; align-items: start; }
+    .study-card { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.2rem; align-items: start; }
     .study-year { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 500; padding-top: 0.15rem; }
     .study-authors { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.45rem; text-transform: uppercase; }
-    .study-card a { display: inline-block; margin-top: 0.5rem; font-family: var(--mono); font-size: 0.65rem; color: var(--accent); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(26,111,181,0.4); }
 
-    /* ── FORUM ── */
-    .forum-card { background: rgba(10,74,128,0.90); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid rgba(100,180,240,0.2); border-radius: var(--radius); padding: 3rem; margin-top: 3rem; position: relative; overflow: hidden; }
+    .forum-card { background: rgba(10,74,128,0.90); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid rgba(100,180,240,0.2); border-radius: var(--radius); padding: 3rem; margin-top: 3rem; }
     .forum-card h2 { font-family: var(--display); font-size: 1.8rem; color: #e8f3ff; margin-bottom: 0.5rem; }
-    .forum-card > p { color: #7aaac8; font-size: 0.92rem; margin-bottom: 2rem; font-weight: 300; }
+    .forum-card p { color: #7aaac8; font-size: 0.92rem; margin-bottom: 2rem; font-weight: 300; }
 
-    /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── MOBILE ── */
-    .mobile-nav-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.5rem 0.8rem; font-size: 1.2rem; cursor: pointer; }
+    .mobile-nav-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.5rem 0.8rem; cursor: pointer; }
     @media (max-width: 768px) {
       .mobile-nav-toggle { display: block; }
       .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
@@ -169,8 +161,8 @@
         <p>Konkrete Tipps für den Einsatz von KI-Werkzeugen, Hinweise auf aktuelle Forschung und ein Forum für den kollegialen Austausch. Fokus auf Gymnasialbildung im Jahr 2026.</p>
       </div>
       <div style="flex-shrink:0;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/The_Thinker_Musee_Rodin.jpg/220px-The_Thinker_Musee_Rodin.jpg" alt="KI-Denker"
-          style="width:160px; height: auto; border-radius: 12px; opacity:0.92; filter: contrast(1.1) grayscale(0.5); mix-blend-mode:multiply;" />
+        <img src="images/denker.png" alt="KI-Denker"
+          style="width:220px; opacity:0.92; filter:drop-shadow(0 8px 24px rgba(20,60,110,0.18)); mix-blend-mode:multiply;" />
       </div>
     </div>
   </div>
@@ -214,7 +206,7 @@
           <span class="card-toggle">+</span>
         </div>
         <div class="card-expanded">
-          <p>Prompt Engineering ist eine Schlüsselkompetenz. Elemente eines guten Prompts sind: Kontext, Aufgabe, Format und Einschränkungen.</p>
+          <p>Prompt Engineering ist eine Schlüsselkompetenz. Elemente eines guten Prompts sind: Kontext, Aufgabe, Format und Einschränkungen. Die iterative Verbesserung schult sprachliche Präzision.</p>
         </div>
       </div>
 
@@ -392,14 +384,14 @@
           <div class="card-header-text">
             <p class="tool-meta">Google · 1M Token</p>
             <h3>Gemini 3.1 Pro</h3>
-            <p>Multimodale Power & nahtlose Workspace-Integration.</p>
+            <p>Multimodale Power & Workspace-Integration.</p>
           </div>
           <span class="card-toggle">+</span>
         </div>
         <div class="card-expanded">
-          <p><b>Kapazität:</b> Kontextfenster von <b>1 Million Token</b> zur Analyse ganzer Lehrwerke.</p>
-          <p><b>Bilderstellung:</b> Nutzt <b>Nano Banana 2</b> für fotorealistische Visualisierungen und hochpräzise <b>technische Skizzen</b>.</p>
-          <p><b>Unterrichtseinsatz:</b> Ideal für die Analyse großer Datensätze und die direkte Erstellung von Materialien in Google Docs und Drive.</p>
+          <p><b>Kapazität:</b> 1 Million Token Kontext für die Analyse ganzer Dokumentensammlungen.</p>
+          <p><b>Bilderstellung:</b> Nutzt <b>Nano Banana 2</b> für hochwertige Bilder und präzise technische Skizzen.</p>
+          <p><b>Integration:</b> Tief in Workspace eingebettet für direkten Workflow in Docs/Drive.</p>
         </div>
       </div>
 
@@ -409,14 +401,14 @@
           <div class="card-header-text">
             <p class="tool-meta">Anthropic · 1M Token</p>
             <h3>Claude 4.6 (Opus & Sonnet)</h3>
-            <p>Der Spezialist für Textanalyse, Logik und LaTeX.</p>
+            <p>Spezialist für Logik, Analyse und LaTeX.</p>
           </div>
           <span class="card-toggle">+</span>
         </div>
         <div class="card-expanded">
-          <p><b>Modellvarianten:</b> Mit <b>Opus 4.6</b> für höchste kognitive Anforderungen und <b>Sonnet 4.6</b> für schnelle Analysen.</p>
-          <p><b>LaTeX & Zeichnungen:</b> Claude verfügt über die beste Unterstützung für wissenschaftlichen Satz. Er kann mit <b>TikZ-Code</b> komplexe <b>technische Zeichnungen selbst erstellen</b>.</p>
-          <p><b>Hinweis:</b> Claude bietet keine native Bildgenerierung an, brilliert dafür aber bei strukturiertem Code.</p>
+          <p><b>Analyse:</b> Aktuell führend bei komplexem Reasoning und logischen Herleitungen.</p>
+          <p><b>LaTeX/TikZ:</b> Überlegene Unterstützung; kann TikZ-Code für technische Zeichnungen direkt generieren.</p>
+          <p><b>Fokus:</b> Keine native Bild-KI, dafür maximale Präzision bei Text und wissenschaftlichen Inhalten.</p>
         </div>
       </div>
 
@@ -426,14 +418,14 @@
           <div class="card-header-text">
             <p class="tool-meta">OpenAI · 1M Token</p>
             <h3>ChatGPT (GPT-5.4)</h3>
-            <p>Vielseitiger Allrounder mit neuem "Thinking"-Modus.</p>
+            <p>Vielseitiger Allrounder mit "Thinking"-Modus.</p>
           </div>
           <span class="card-toggle">+</span>
         </div>
         <div class="card-expanded">
-          <p><b>Thinking-Modus:</b> Schrittweises Reasoning für MINT-Fächer zur Vermeidung von Flüchtigkeitsfehlern.</p>
-          <p><b>Bilder:</b> Integriert ebenfalls <b>Nano Banana 2</b> für kreative Visualisierungen.</p>
-          <p><b>LaTeX:</b> Sehr gute Formelausgabe für die Erstellung von Klausurvorlagen.</p>
+          <p><b>Modus:</b> Neuer "Thinking"-Modus für tiefes schrittweises Lösen von MINT-Problemen.</p>
+          <p><b>Bilder:</b> Integriert <b>Nano Banana 2</b> für kreative Visualisierungen.</p>
+          <p><b>Klausuren:</b> Sehr starke Unterstützung bei der Erstellung von LaTeX-Klausurvorlagen.</p>
         </div>
       </div>
 
@@ -443,21 +435,21 @@
           <div class="card-header-text">
             <p class="tool-meta">Google · Abo enthalten</p>
             <h3>NotebookLM Plus</h3>
-            <p>KI-gestützte Arbeit mit eigenen Dokumenten.</p>
+            <p>Quellenbasierte Wissensarbeit & Audio-Overviews.</p>
           </div>
           <span class="card-toggle">+</span>
         </div>
         <div class="card-expanded">
-          <p><b>Abo-Info:</b> Vollständig im <b>Gemini Advanced Abonnement</b> enthalten.</p>
-          <p><b>Output:</b> Erstellt Audio-Podcasts und <b>Video-Zusammenfassungen</b> basierend auf Quellen.</p>
-          <p><b>Lernhilfe:</b> Perfekt für Facharbeiten zur Erstellung von Mindmaps und Quizze.</p>
+          <p><b>Abonnement:</b> Vollständig im <b>Gemini Advanced Abo</b> enthalten.</p>
+          <p><b>Features:</b> Audio/Video-Zusammenfassungen und automatische Querverweise aus eigenen Quellen.</p>
+          <p><b>Lernhilfe:</b> Erstellt Mindmaps, Quizze und Karteikarten direkt aus hochgeladenen PDFs.</p>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- SIMULATIONEN -->
+  <!-- ═══ SIMULATIONEN ═══ -->
   <section id="simulationen">
     <div class="section-header">
       <span class="section-num">05 —</span>
@@ -473,13 +465,13 @@
       <a class="glass-card material-card" href="sims/Zerfall.html" target="_blank">
         <span class="material-type">☢️ Kernphysik</span>
         <h3>Radioaktiver Zerfall</h3>
-        <p>3D-Würfelmodell zur statistischen Simulation.</p>
+        <p>3D-Würfelmodell zur statistischen Simulation von Zerfällen.</p>
         <span class="material-link">→ Starten</span>
       </a>
       <a class="glass-card material-card" href="sims/Elektronenroehre.html" target="_blank">
         <span class="material-type">⚡ Physik</span>
         <h3>Elektronenablenkröhre</h3>
-        <p>Simulation der Kathodenstrahlröhre.</p>
+        <p>Simulation der Kathodenstrahlröhre mit Live-Berechnung.</p>
         <span class="material-link">→ Starten</span>
       </a>
       <a class="glass-card material-card" href="sims/kinetik.html" target="_blank">
@@ -503,10 +495,12 @@
 </main>
 
 <script>
-  // Accordion
+  // Accordion Logik für Tipps & Tools
   function toggleAccordion(card) {
     const isOpen = card.classList.contains('open');
     const grid = card.parentElement;
+    
+    // Andere Karten im gleichen Grid schließen
     grid.querySelectorAll('.collapsible-card.open').forEach(c => {
       if (c !== card) c.classList.remove('open');
     });
@@ -521,7 +515,7 @@
     }
   }
 
-  // Aktive Navigation
+  // Aktive Navigation beim Scrollen
   const sections = document.querySelectorAll('section[id], [id="forum"]');
   const navLinks = document.querySelectorAll('.sidebar nav a');
   const navObserver = new IntersectionObserver((entries) => {
