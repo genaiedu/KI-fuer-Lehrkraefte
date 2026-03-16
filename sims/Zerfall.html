@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Zerfall Simulator - Summen Modus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --theme-color: #10b981;
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+        }
+
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background-color: var(--bg-color); 
+            transition: background-color 0.8s ease;
+            touch-action: none; 
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+        }
+        
+        #canvas-container { width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }
+        
+        .ui-layer { position: absolute; z-index: 10; pointer-events: none; width: 100%; height: 100%; }
+        .interactive { pointer-events: auto; }
+        
+        /* Screens */
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--bg-color);
+            transition: opacity 0.5s, background-color 0.8s;
+            z-index: 20;
+        }
+        .hidden-screen { opacity: 0; pointer-events: none; }
+        
+        .lab-btn {
+            background: white; border: 1px solid #e5e7eb; color: #374151;
+            padding: 15px 30px; font-size: 1.1rem; font-weight: 800;
+            cursor: pointer; margin: 8px; min-width: 260px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-radius: 16px; transition: all 0.2s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .lab-btn:active { transform: scale(0.98); }
+        .lab-btn span { font-size: 0.75rem; font-weight: 400; color: #6b7280; margin-top: 4px; }
+        
+        /* Slider */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 20px 0; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
+            background: var(--theme-color); cursor: pointer; margin-top: -10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; cursor: pointer; background: #e5e7eb; border-radius: 2px;
+        }
+        
+        #roll-btn {
+            position: absolute; bottom: 40px; right: 30px;
+            width: 100px; height: 100px; border-radius: 30px;
+            background: var(--theme-color); border: none; color: white;
+            font-size: 1.2rem; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); z-index: 30;
+            transition: all 0.3s;
+        }
+        #roll-btn:active { transform: scale(0.90); }
+        #roll-btn:disabled { transform: scale(0); opacity: 0; }
+
+        #reset-overlay-btn {
+            display: none; background: white; color: #dc2626;
+            border: none; font-size: 1.5rem; padding: 15px 40px;
+            font-weight: 800; border-radius: 12px; cursor: pointer; pointer-events: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        #status-panel {
+            position: absolute; top: 60px; width: 100%;
+            text-align: center; pointer-events: none;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        #status-sub {
+            font-family: 'Share Tech Mono', monospace; font-size: 1rem;
+            color: #9ca3af; background: white; padding: 4px 12px;
+            border-radius: 20px; border: 1px solid #e5e7eb; margin-bottom: 10px;
+            transition: opacity 0.3s;
+        }
+        #status-text {
+            font-size: 5rem; font-weight: 800; color: var(--text-color);
+            line-height: 0.9; opacity: 0; transform: translateY(10px);
+            transition: all 0.3s; text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+        }
+        #status-detail {
+            font-size: 1.5rem; color: #6b7280; font-weight: 600; opacity: 0; margin-top: 5px;
+        }
+
+        .status-decay { color: #dc2626 !important; text-shadow: 0 0 30px rgba(220, 38, 38, 0.3) !important; }
+        .decay-bg { background-color: #fee2e2 !important; }
+        
+        #small-reset {
+            color: #6b7280; background: white; border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        #threshold-display { font-family: 'Share Tech Mono', monospace; color: var(--theme-color); }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+                "cannon-es": "https://unpkg.com/cannon-es@0.20.0/dist/cannon-es.js"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer" class="ui-layer">
+        
+        <!-- 1. Selection Screen -->
+        <div id="start-screen" class="screen interactive">
+            <div class="mb-8 text-center">
+                <h1 class="text-6xl font-black mb-2 text-gray-800 tracking-tighter">ZERFALL</h1>
+                <p class="text-gray-500 font-mono text-sm">SUMMEN MODUS V 2.3</p>
+            </div>
+            <div class="flex flex-col gap-3">
+                <button onclick="showSetup('D6')" class="lab-btn interactive">
+                    1x W6 Modell
+                    <span>Klassisch (1-6)</span>
+                </button>
+                <button onclick="showSetup('2xD6')" class="lab-btn interactive border-l-4 border-l-[#10b981]">
+                    2x W6 Summen-Modell
+                    <span>Gauß-Verteilung (2-12)</span>
+                </button>
+                <button onclick="showSetup('D20')" class="lab-btn interactive">
+                    1x W20 Modell
+                    <span>Geringe Wahrscheinlichkeit (1-20)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Setup Threshold Screen -->
+        <div id="setup-screen" class="screen hidden-screen interactive">
+            <div class="w-80 bg-white p-8 rounded-2xl shadow-xl text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Zerfallsgrenze</h2>
+                <p class="text-sm text-gray-500 mb-6">Kern zerfällt bei Ergebnis ≤ X</p>
+                
+                <div class="mb-2 text-4xl font-bold" id="threshold-value-display">1</div>
+                <div class="text-sm font-mono mb-6 text-gray-400" id="probability-display">...</div>
+                
+                <input type="range" id="threshold-slider" min="1" max="5" value="1" step="1" class="mb-8" oninput="updateThresholdUI()">
+                
+                <button onclick="startGame()" class="w-full py-4 bg-[#10b981] text-white font-bold rounded-xl shadow-lg hover:bg-[#059669] transition">
+                    EXPERIMENT STARTEN
+                </button>
+                
+                <button onclick="backToStart()" class="mt-4 text-gray-400 text-sm hover:text-gray-600">
+                    Zurück
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. HUD (In Game) -->
+        <div id="hud" class="hidden w-full h-full flex flex-col items-center justify-center pointer-events-none">
+            <div id="status-panel">
+                <div id="status-sub">BEREIT</div>
+                <div id="status-text"></div>
+                <div id="status-detail"></div>
+                <div id="threshold-display" class="mt-2 text-xs opacity-50"></div>
+            </div>
+            <button id="reset-overlay-btn" onclick="softReset()" class="interactive mt-24 pointer-events-auto">NEUE MESSREIHE</button>
+            <button id="roll-btn" class="interactive shadow-xl pointer-events-auto">WURF</button>
+            <button id="small-reset" onclick="softReset()" class="interactive pointer-events-auto absolute top-6 left-6 px-3 py-1 text-xs font-bold rounded-md transition z-30">RESET</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import * as CANNON from 'cannon-es';
+        import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+        const themes = [
+            { color: '#059669' }, { color: '#2563eb' }, { color: '#d97706' }, { color: '#7c3aed' }, { color: '#db2777' }
+        ];
+        let currentThemeIndex = 0;
+
+        let scene, camera, renderer;
+        let world, physicsMaterial;
+        
+        // Arrays to handle multiple dice
+        let diceBodies = [];
+        let diceMeshes = [];
+        let wallBodies = [];
+        
+        let isRolling = false;
+        let isDecayed = false;
+        let currentMode = 'D6'; // 'D6', '2xD6', 'D20'
+        let decayThreshold = 1;
+        
+        // DOM
+        const startScreen = document.getElementById('start-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const hud = document.getElementById('hud');
+        const slider = document.getElementById('threshold-slider');
+        const valDisplay = document.getElementById('threshold-value-display');
+        const probDisplay = document.getElementById('probability-display');
+        const threshInfo = document.getElementById('threshold-display');
+        const statusText = document.getElementById('status-text');
+        const statusDetail = document.getElementById('status-detail');
+        const statusSub = document.getElementById('status-sub');
+        const rollBtn = document.getElementById('roll-btn');
+        const resetOverlayBtn = document.getElementById('reset-overlay-btn');
+        
+        // --- Setup Logic ---
+        window.showSetup = (mode) => {
+            currentMode = mode;
+            startScreen.classList.add('hidden-screen');
+            setupScreen.classList.remove('hidden-screen');
+            
+            if (mode === 'D6') {
+                slider.min = 1; slider.max = 5; slider.value = 1;
+            } else if (mode === '2xD6') {
+                slider.min = 2; slider.max = 11; slider.value = 2; // Sum 2..12
+            } else { // D20
+                slider.min = 1; slider.max = 19; slider.value = 1;
+            }
+            updateThresholdUI();
+        };
+        
+        window.updateThresholdUI = () => {
+            const val = parseInt(slider.value);
+            let probStr = "";
+            
+            if (currentMode === '2xD6') {
+                // Calculate Sum Probability for 2 dice
+                let combinations = 0;
+                let matches = 0;
+                for(let i=1; i<=6; i++) {
+                    for(let j=1; j<=6; j++) {
+                        combinations++;
+                        if ((i+j) <= val) matches++;
+                    }
+                }
+                const prob = (matches / combinations * 100).toFixed(1);
+                probStr = `${matches} von ${combinations} Komb. (${prob}%)`;
+            } else {
+                const max = currentMode === 'D20' ? 20 : 6;
+                const prob = ((val / max) * 100).toFixed(1);
+                probStr = `${val} von ${max} (${prob}%)`;
+            }
+            
+            valDisplay.innerText = `≤ ${val}`;
+            probDisplay.innerText = probStr;
+        };
+        
+        window.backToStart = () => {
+            setupScreen.classList.add('hidden-screen');
+            startScreen.classList.remove('hidden-screen');
+        };
+
+        window.startGame = () => {
+            decayThreshold = parseInt(slider.value);
+            threshInfo.innerText = `Zerfall bei: ≤ ${decayThreshold}`;
+            
+            setupScreen.classList.add('hidden-screen');
+            hud.classList.remove('hidden');
+            
+            if(renderer) document.getElementById('canvas-container').innerHTML = '';
+            
+            initThree();
+            initPhysics();
+            createDynamicWalls();
+            createDiceEntities(currentMode); 
+            
+            isDecayed = false; isRolling = false;
+            rollBtn.disabled = false; rollBtn.style.display = 'flex'; 
+            resetOverlayBtn.style.display = 'none';
+            statusText.innerText = ""; statusText.style.opacity = 0;
+            statusDetail.innerText = ""; statusDetail.style.opacity = 0;
+            statusSub.innerText = "BEREIT"; statusSub.style.opacity = 1;
+            statusSub.className = ""; 
+            document.body.classList.remove('decay-bg');
+            
+            setupInputs();
+            animate();
+        };
+
+        // --- Theme ---
+        function applyTheme() {
+            const theme = themes[currentThemeIndex];
+            document.documentElement.style.setProperty('--theme-color', theme.color);
+        }
+        function rotateTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            applyTheme();
+        }
+        window.softReset = () => {
+            rotateTheme();
+            hud.classList.add('hidden');
+            startScreen.classList.remove('hidden-screen');
+            document.body.classList.remove('decay-bg');
+        };
+
+        // --- 3D Engine ---
+        function initThree() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf3f4f6); 
+            scene.fog = new THREE.Fog(0xf3f4f6, 20, 60);
+
+            camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 35, 0); 
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            dirLight.position.set(5, 20, 5);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.radius = 12; 
+            dirLight.shadow.bias = -0.0005;
+            scene.add(dirLight);
+            const fillLight = new THREE.DirectionalLight(0xeef2ff, 0.6);
+            fillLight.position.set(-5, 10, -5);
+            scene.add(fillLight);
+
+            const floorGeo = new THREE.PlaneGeometry(100, 100);
+            const floorMat = new THREE.ShadowMaterial({ opacity: 0.12 });
+            const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+            floorMesh.rotation.x = -Math.PI / 2;
+            floorMesh.receiveShadow = true;
+            scene.add(floorMesh);
+            
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function initPhysics() {
+            world = new CANNON.World();
+            world.gravity.set(0, -40, 0);
+            world.broadphase = new CANNON.NaiveBroadphase();
+            world.solver.iterations = 30;
+
+            physicsMaterial = new CANNON.Material('diceMat');
+            const contactMat = new CANNON.ContactMaterial(physicsMaterial, physicsMaterial, { friction: 0.3, restitution: 0.5 });
+            world.addContactMaterial(contactMat);
+
+            const groundShape = new CANNON.Plane();
+            const groundBody = new CANNON.Body({ mass: 0, material: physicsMaterial });
+            groundBody.addShape(groundShape);
+            groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+            world.addBody(groundBody);
+        }
+
+        function createDynamicWalls() {
+            wallBodies.forEach(b => world.removeBody(b));
+            wallBodies = [];
+            const vFOV = THREE.MathUtils.degToRad(camera.fov);
+            const visibleHeight = 2 * Math.tan(vFOV / 2) * camera.position.y;
+            const visibleWidth = visibleHeight * camera.aspect;
+            const margin = 2.0;
+            const w = (visibleWidth / 2) - margin;
+            const h = (visibleHeight / 2) - margin;
+            const wallThickness = 10; const wallHeight = 50;
+            const wallShapeH = new CANNON.Box(new CANNON.Vec3(visibleWidth, wallHeight, wallThickness));
+            const wallShapeV = new CANNON.Box(new CANNON.Vec3(wallThickness, wallHeight, visibleHeight));
+            createWall(0, 0, -h - wallThickness, wallShapeH);
+            createWall(0, 0, h + wallThickness, wallShapeH);
+            createWall(-w - wallThickness, 0, 0, wallShapeV);
+            createWall(w + wallThickness, 0, 0, wallShapeV);
+            const ceilShape = new CANNON.Box(new CANNON.Vec3(50, wallThickness, 50));
+            createWall(0, 25, 0, ceilShape);
+        }
+
+        function createWall(x, y, z, shape) {
+            const body = new CANNON.Body({ mass: 0, material: physicsMaterial });
+            body.addShape(shape);
+            body.position.set(x, y, z);
+            world.addBody(body);
+            wallBodies.push(body);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            createDynamicWalls();
+        }
+
+        // --- Textures ---
+        function createD6Texture(val) {
+            const size = 512;
+            const cvs = document.createElement('canvas'); cvs.width = size; cvs.height = size;
+            const ctx = cvs.getContext('2d');
+            const themeColor = themes[currentThemeIndex].color;
+            ctx.fillStyle = themeColor; ctx.fillRect(0,0,size,size);
+            ctx.fillStyle = '#ffffff'; ctx.shadowColor = 'rgba(0,0,0,0.2)'; ctx.shadowBlur = 5; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+            const r=45, c=256, o=130;
+            const dot = (x,y) => { ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); };
+            if(val===1) dot(c,c);
+            if(val===2) { dot(c-o,c-o); dot(c+o,c+o); }
+            if(val===3) { dot(c-o,c-o); dot(c,c); dot(c+o,c+o); }
+            if(val===4) { dot(c-o,c-o); dot(c+o,c-o); dot(c-o,c+o); dot(c+o,c+o); }
+            if(val===5) { dot(c-o,c-o); dot(c+o,c-o); dot(c,c); dot(c-o,c+o); dot(c+o,c+o); }
+            if(val===6) { dot(c-o,c-o); dot(c+o,c-o); dot(c-o,c); dot(c+o,c); dot(c-o,c+o); dot(c+o,c+o); }
+            return new THREE.CanvasTexture(cvs);
+        }
+
+        function createD20Atlas() {
+            const w = 1024; const h = 819;
+            const cvs = document.createElement('canvas'); cvs.width = w; cvs.height = h;
+            const ctx = cvs.getContext('2d');
+            const themeColor = themes[currentThemeIndex].color;
+            ctx.fillStyle = themeColor; ctx.fillRect(0,0,w,h);
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            for(let i=0; i<500; i++) ctx.fillRect(Math.random()*w, Math.random()*h, 2, 2);
+            const cols = 5; const rows = 4;
+            const cellW = w / cols; const cellH = h / rows;
+            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 80px "Inter", sans-serif';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.shadowColor = 'rgba(0,0,0,0.2)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+            for (let i = 0; i < 20; i++) {
+                const col = i % cols; const row = Math.floor(i / cols);
+                const x = col * cellW + cellW / 2; const y = row * cellH + cellH / 2;
+                const val = i + 1;
+                ctx.fillText(val.toString(), x, y);
+                if(val===6 || val===9) ctx.fillRect(x-20, y+35, 40, 4);
+            }
+            return new THREE.CanvasTexture(cvs);
+        }
+
+        // --- Multi Dice Creation ---
+        function createDiceEntities(mode) {
+            diceBodies = [];
+            diceMeshes = [];
+
+            if (mode === '2xD6') {
+                createSingleDie('D6', -2.5); 
+                createSingleDie('D6', 2.5);  
+            } else {
+                createSingleDie(mode, 0);
+            }
+        }
+
+        function createSingleDie(type, xOffset) {
+            const solidParams = { roughness: 0.15, metalness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.1 };
+            let mesh, body;
+
+            if (type === 'D6') {
+                const geo = new RoundedBoxGeometry(3, 3, 3, 4, 0.5); 
+                const mats = [1,6,2,5,3,4].map(n => new THREE.MeshPhysicalMaterial({ ...solidParams, map: createD6Texture(n) }));
+                mesh = new THREE.Mesh(geo, mats);
+                
+                const shape = new CANNON.Box(new CANNON.Vec3(1.5,1.5,1.5));
+                body = new CANNON.Body({ mass:1, material: physicsMaterial });
+                body.addShape(shape);
+                
+                mesh.userData.faceNormals = [
+                    { normal: new THREE.Vector3(1, 0, 0), value: 1 }, { normal: new THREE.Vector3(-1, 0, 0), value: 6 },
+                    { normal: new THREE.Vector3(0, 1, 0), value: 2 }, { normal: new THREE.Vector3(0, -1, 0), value: 5 },
+                    { normal: new THREE.Vector3(0, 0, 1), value: 3 }, { normal: new THREE.Vector3(0, 0, -1), value: 4 }
+                ];
+                mesh.userData.type = 'D6';
+            } else {
+                const radius = 2.0;
+                const geometry = new THREE.IcosahedronGeometry(radius, 0); 
+                const nonIndexedGeo = geometry.toNonIndexed();
+                const atlasTexture = createD20Atlas(); atlasTexture.colorSpace = THREE.SRGBColorSpace;
+                
+                const uvAttribute = nonIndexedGeo.attributes.uv;
+                const cols = 5; const rows = 4;
+                const values = Array.from({length: 20}, (_, k) => k + 1);
+                for (let i = values.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [values[i], values[j]] = [values[j], values[i]]; }
+                const faceValues = [];
+                for (let i = 0; i < 20; i++) {
+                    const val = values[i]; const gridIndex = val - 1; 
+                    const col = gridIndex % cols; const row = Math.floor(gridIndex / cols);
+                    const uStep = 1 / cols; const vStep = 1 / rows;
+                    const u0 = col * uStep; const v0 = 1 - ((row + 1) * vStep);
+                    const pad = 0.02; 
+                    const uv1 = { u: u0 + uStep/2, v: v0 + vStep - pad };
+                    const uv2 = { u: u0 + pad, v: v0 + pad };
+                    const uv3 = { u: u0 + uStep - pad, v: v0 + pad };
+                    const vIdx1 = i * 3; const vIdx2 = i * 3 + 1; const vIdx3 = i * 3 + 2;
+                    uvAttribute.setXY(vIdx1, uv1.u, uv1.v); uvAttribute.setXY(vIdx2, uv2.u, uv2.v); uvAttribute.setXY(vIdx3, uv3.u, uv3.v);
+                    const posAttribute = nonIndexedGeo.attributes.position;
+                    const vA = new THREE.Vector3().fromBufferAttribute(posAttribute, vIdx1);
+                    const vB = new THREE.Vector3().fromBufferAttribute(posAttribute, vIdx2);
+                    const vC = new THREE.Vector3().fromBufferAttribute(posAttribute, vIdx3);
+                    const center = new THREE.Vector3().add(vA).add(vB).add(vC).divideScalar(3).normalize();
+                    faceValues.push({ vector: center, value: val });
+                }
+                nonIndexedGeo.attributes.uv.needsUpdate = true;
+                const mat = new THREE.MeshPhysicalMaterial({ ...solidParams, map: atlasTexture, flatShading: true });
+                mesh = new THREE.Mesh(nonIndexedGeo, mat);
+                
+                const t = (1 + Math.sqrt(5)) / 2; const s = radius/1.8;
+                const verts = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(v=>new CANNON.Vec3(v[0]*s,v[1]*s,v[2]*s));
+                const faces = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+                const shape = new CANNON.ConvexPolyhedron({ vertices: verts, faces });
+                body = new CANNON.Body({ mass:1, material: physicsMaterial });
+                body.addShape(shape);
+                mesh.userData.faceCenters = faceValues;
+                mesh.userData.type = 'D20';
+            }
+
+            body.position.set(xOffset, 5, 0);
+            mesh.castShadow = true; mesh.receiveShadow = true;
+            scene.add(mesh);
+            world.addBody(body);
+            diceMeshes.push(mesh);
+            diceBodies.push(body);
+        }
+
+        // --- Game Logic ---
+        function rollDice() {
+            if(isRolling || isDecayed) return;
+            isRolling = true;
+            
+            statusText.style.opacity = 0; 
+            statusDetail.style.opacity = 0;
+            statusSub.innerText = "MESSUNG..."; statusSub.style.opacity = 1;
+
+            // Roll ALL dice
+            diceBodies.forEach((body, i) => {
+                const offset = diceBodies.length > 1 ? (i === 0 ? -2 : 2) : 0;
+                body.position.set(offset, 12 + Math.random()*2, 0); 
+                body.velocity.set(0,0,0);
+                body.angularVelocity.set((Math.random()-0.5)*60,(Math.random()-0.5)*60,(Math.random()-0.5)*60);
+                body.quaternion.set(Math.random(),Math.random(),Math.random(),Math.random()).normalize();
+                body.velocity.set((Math.random()-0.5)*3, -8, (Math.random()-0.5)*3);
+            });
+
+            checkResult();
+        }
+
+        function checkResult() {
+            let stable = 0;
+            const intv = setInterval(() => {
+                let allStable = true;
+                diceBodies.forEach(b => {
+                    if (b.velocity.length() > 0.05 || b.angularVelocity.length() > 0.05 || b.position.y > 3) {
+                        allStable = false;
+                    }
+                });
+
+                if (allStable) {
+                    stable++;
+                    if (stable > 5) { clearInterval(intv); isRolling=false; showResult(); }
+                } else stable = 0;
+            }, 100);
+        }
+
+        function getDieResult(mesh, body) {
+            const q = new THREE.Quaternion().copy(body.quaternion);
+            let val = "?";
+            
+            if (mesh.userData.type === 'D6') {
+                let maxY = -Infinity;
+                mesh.userData.faceNormals.forEach(f => {
+                    const worldY = f.normal.clone().applyQuaternion(q).y;
+                    if (worldY > maxY) { maxY = worldY; val = f.value; }
+                });
+            } else {
+                let maxY = -Infinity;
+                mesh.userData.faceCenters.forEach(f => {
+                    const worldVec = f.vector.clone().applyQuaternion(q);
+                    if (worldVec.y > maxY) { maxY = worldVec.y; val = f.value; }
+                });
+            }
+            return val;
+        }
+
+        function showResult() {
+            let totalSum = 0;
+            let individualValues = [];
+            
+            for(let i=0; i<diceMeshes.length; i++) {
+                const val = getDieResult(diceMeshes[i], diceBodies[i]);
+                totalSum += val;
+                individualValues.push(val);
+            }
+
+            statusText.innerText = totalSum;
+            statusText.style.opacity = 1;
+            
+            // Show detail if multi dice
+            if (diceMeshes.length > 1) {
+                statusDetail.innerText = `(${individualValues.join(" + ")})`;
+                statusDetail.style.opacity = 1;
+            } else {
+                statusDetail.innerText = "";
+            }
+            
+            if (totalSum <= decayThreshold) {
+                isDecayed = true; 
+                statusSub.innerText = "ATOMKERN ZERFALLEN"; 
+                statusText.classList.add('status-decay');
+                document.body.classList.add('decay-bg'); 
+                rollBtn.disabled = true; rollBtn.style.display = 'none';
+                resetOverlayBtn.style.display = 'block';
+            } else {
+                statusSub.innerText = "KERN STABIL"; 
+                statusText.classList.remove('status-decay');
+            }
+        }
+
+        function setupInputs() { rollBtn.onclick = rollDice; }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            world.step(1/60);
+            for(let i=0; i<diceMeshes.length; i++) {
+                diceMeshes[i].position.copy(diceBodies[i].position);
+                diceMeshes[i].quaternion.copy(diceBodies[i].quaternion);
+            }
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

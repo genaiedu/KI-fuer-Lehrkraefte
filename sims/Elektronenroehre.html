@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elektronenablenkröhre Simulation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for rendering LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #2d3748;
+            border-radius: 1rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+        }
+
+        canvas {
+            background-color: #1a202c;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <div class="container flex flex-col lg:flex-row gap-8">
+        <div class="controls w-full lg:w-1/3 p-4 bg-gray-700 rounded-xl shadow-lg">
+            <h1 class="text-3xl font-bold mb-6 text-center text-teal-300">Elektronenstrahl-Simulation</h1>
+            <p class="text-sm mb-6 text-center text-gray-400">Passe die Parameter an, um die Bewegung des Elektrons zu sehen.</p>
+            
+            <div id="control-panel" class="space-y-6">
+                <!-- Beschleunigungsspannung -->
+                <div class="control-group">
+                    <label for="U_accel" class="block text-sm font-medium">Beschleunigungsspannung (V)</label>
+                    <input type="range" id="U_accel" min="100" max="10000" value="5000" step="10" class="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer">
+                    <span id="U_accel-value" class="text-xs text-gray-400 mt-1 block text-right">5000 V</span>
+                </div>
+
+                <!-- Ablenkspannung -->
+                <div class="control-group">
+                    <label for="U_deflect" class="block text-sm font-medium">Ablenkspannung (V)</label>
+                    <input type="range" id="U_deflect" min="0" max="500" value="250" step="1" class="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer">
+                    <span id="U_deflect-value" class="text-xs text-gray-400 mt-1 block text-right">250 V</span>
+                </div>
+
+                <!-- Plattenabstand -->
+                <div class="control-group">
+                    <label for="d_deflect" class="block text-sm font-medium">Plattenabstand (cm)</label>
+                    <input type="range" id="d_deflect" min="0.5" max="5" value="2" step="0.1" class="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer">
+                    <span id="d_deflect-value" class="text-xs text-gray-400 mt-1 block text-right">2 cm</span>
+                </div>
+
+                <!-- Länge der Platten -->
+                <div class="control-group">
+                    <label for="L_deflect" class="block text-sm font-medium">Länge der Platten (cm)</label>
+                    <input type="range" id="L_deflect" min="1" max="20" value="10" step="0.5" class="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer">
+                    <span id="L_deflect-value" class="text-xs text-gray-400 mt-1 block text-right">10 cm</span>
+                </div>
+
+                <!-- Länge der Driftstrecke -->
+                <div class="control-group">
+                    <label for="L_drift" class="block text-sm font-medium">Länge der Driftstrecke (cm)</label>
+                    <input type="range" id="L_drift" min="1" max="50" value="20" step="1" class="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer">
+                    <span id="L_drift-value" class="text-xs text-gray-400 mt-1 block text-right">20 cm</span>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center bg-gray-800 p-4 rounded-lg">
+                <span class="text-sm text-gray-400">Maximale Ablenkung nach der Driftstrecke</span>
+                <p id="y_total-value" class="text-4xl font-extrabold text-lime-400 mt-2">0.00 cm</p>
+            </div>
+        </div>
+
+        <div class="simulation w-full lg:w-2/3 flex flex-col items-center justify-center p-4">
+            <canvas id="crt-canvas" class="w-full rounded-xl shadow-lg"></canvas>
+            <div class="legend mt-4 text-center text-gray-400 text-sm">
+                <p>Graue Linie: Plattenbereich</p>
+                <p class="text-cyan-400">Cyan: Beschleunigungsbereich</p>
+                <p class="text-fuchsia-400">Magenta: Ablenkungsbereich</p>
+                <p class="text-amber-400">Gelb: Driftstrecke</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM-Elemente
+        const canvas = document.getElementById('crt-canvas');
+        const ctx = canvas.getContext('2d');
+        const U_accel_input = document.getElementById('U_accel');
+        const U_deflect_input = document.getElementById('U_deflect');
+        const d_deflect_input = document.getElementById('d_deflect');
+        const L_deflect_input = document.getElementById('L_deflect');
+        const L_drift_input = document.getElementById('L_drift');
+
+        const U_accel_value_span = document.getElementById('U_accel-value');
+        const U_deflect_value_span = document.getElementById('U_deflect-value');
+        const d_deflect_value_span = document.getElementById('d_deflect-value');
+        const L_deflect_value_span = document.getElementById('L_deflect-value');
+        const L_drift_value_span = document.getElementById('L_drift-value');
+        const y_total_value_span = document.getElementById('y_total-value');
+
+        // Konstanten
+        const e = 1.602e-19; // Elementarladung (C)
+        const m = 9.109e-31; // Elektronenmasse (kg)
+
+        // Skalierung für die Visualisierung (Pixel pro Meter)
+        let scale = 1;
+
+        // Feste Röhrenlängen (cm)
+        const L_tube_accel = 10;
+
+        // Anpassbare Parameter
+        let params = {
+            U_accel: parseFloat(U_accel_input.value),
+            U_deflect: parseFloat(U_deflect_input.value),
+            d_deflect: parseFloat(d_deflect_input.value) / 100, // cm zu m
+            L_deflect: parseFloat(L_deflect_input.value) / 100, // cm zu m
+            L_drift: parseFloat(L_drift_input.value) / 100, // cm zu m
+        };
+
+        // Event-Listener für Schieberegler
+        U_accel_input.addEventListener('input', updateValues);
+        U_deflect_input.addEventListener('input', updateValues);
+        d_deflect_input.addEventListener('input', updateValues);
+        L_deflect_input.addEventListener('input', updateValues);
+        L_drift_input.addEventListener('input', updateValues);
+
+        // Feste Dimensionen für die Darstellung (Pixel)
+        const margin = 20;
+
+        function updateValues() {
+            // Werte aus den Schiebereglern aktualisieren
+            params.U_accel = parseFloat(U_accel_input.value);
+            params.U_deflect = parseFloat(U_deflect_input.value);
+            params.d_deflect = parseFloat(d_deflect_input.value) / 100;
+            params.L_deflect = parseFloat(L_deflect_input.value) / 100;
+            params.L_drift = parseFloat(L_drift_input.value) / 100;
+
+            // Beschriftungen der Schieberegler aktualisieren
+            U_accel_value_span.textContent = `${params.U_accel} V`;
+            U_deflect_value_span.textContent = `${params.U_deflect} V`;
+            d_deflect_value_span.textContent = `${(params.d_deflect * 100).toFixed(1)} cm`;
+            L_deflect_value_span.textContent = `${(params.L_deflect * 100).toFixed(1)} cm`;
+            L_drift_value_span.textContent = `${(params.L_drift * 100).toFixed(1)} cm`;
+            
+            draw();
+        }
+
+        // Haupt-Zeichenfunktion
+        function draw() {
+            // Canvasgröße anpassen
+            const parentWidth = canvas.parentNode.clientWidth;
+            const parentHeight = parentWidth * (2 / 3); // Verhältnis von 3:2
+            canvas.width = parentWidth;
+            canvas.height = parentHeight;
+
+            // Skalierung basierend auf der Länge der Simulation
+            const totalLength = (L_tube_accel / 100) + params.L_deflect + params.L_drift;
+            scale = (canvas.width - margin * 2) / totalLength;
+
+            // Koordinatensystem: Ursprung links Mitte
+            const offsetX = margin;
+            const offsetY = canvas.height / 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Röhrenkomponenten zeichnen
+            ctx.strokeStyle = '#6b7280';
+            ctx.lineWidth = 2;
+
+            // Achse zeichnen
+            ctx.beginPath();
+            ctx.moveTo(offsetX, offsetY);
+            ctx.lineTo(canvas.width - margin, offsetY);
+            ctx.stroke();
+
+            // Beschleunigungsbereich
+            const x_accel = L_tube_accel / 100 * scale;
+            
+            // Platten
+            const x_plate_start = x_accel;
+            const y_plate_dist = params.d_deflect * scale;
+            ctx.beginPath();
+            ctx.moveTo(x_plate_start + offsetX, offsetY - y_plate_dist / 2);
+            ctx.lineTo(x_plate_start + offsetX + params.L_deflect * scale, offsetY - y_plate_dist / 2);
+            ctx.moveTo(x_plate_start + offsetX, offsetY + y_plate_dist / 2);
+            ctx.lineTo(x_plate_start + offsetX + params.L_deflect * scale, offsetY + y_plate_dist / 2);
+            ctx.stroke();
+
+            // Berechnung der Elektronenbahn
+            // 1. Beschleunigung
+            const v_x = Math.sqrt((2 * e * params.U_accel) / m);
+
+            // 2. Ablenkung im Kondensator
+            const a_y = (e * params.U_deflect) / (m * params.d_deflect);
+            const t_deflect = params.L_deflect / v_x;
+            const y_deflect_end = 0.5 * a_y * Math.pow(t_deflect, 2);
+            const v_y_end = a_y * t_deflect;
+
+            // 3. Driftstrecke
+            const t_drift = params.L_drift / v_x;
+            const y_drift_end = v_y_end * t_drift;
+            const y_total = y_deflect_end + y_drift_end;
+
+            // Elektronenstrahl zeichnen
+            ctx.lineWidth = 3;
+
+            // Beschleunigungsbereich
+            ctx.strokeStyle = '#06b6d4';
+            ctx.beginPath();
+            ctx.moveTo(offsetX, offsetY);
+            ctx.lineTo(offsetX + x_accel, offsetY);
+            ctx.stroke();
+
+            // Ablenkungsbereich (parabolisch)
+            const num_segments = 50;
+            ctx.strokeStyle = '#c026d3';
+            ctx.beginPath();
+            ctx.moveTo(offsetX + x_accel, offsetY);
+            for (let i = 0; i <= num_segments; i++) {
+                const current_L = (i / num_segments) * params.L_deflect;
+                const current_t = current_L / v_x;
+                const current_y = 0.5 * a_y * Math.pow(current_t, 2);
+                ctx.lineTo(offsetX + x_accel + current_L * scale, offsetY - current_y * scale);
+            }
+            ctx.stroke();
+
+            // Driftstrecke (gerade Linie)
+            ctx.strokeStyle = '#f59e0b';
+            ctx.beginPath();
+            const x_last_deflect = x_accel + params.L_deflect * scale;
+            const y_last_deflect = y_deflect_end * scale;
+            ctx.moveTo(offsetX + x_last_deflect, offsetY - y_last_deflect);
+            
+            const x_end_drift = x_accel + params.L_deflect * scale + params.L_drift * scale;
+            const y_end_drift = (y_deflect_end + y_drift_end) * scale;
+            ctx.lineTo(offsetX + x_end_drift, offsetY - y_end_drift);
+            ctx.stroke();
+
+            // Gesamtablenkung anzeigen
+            y_total_value_span.textContent = `${(y_total * 100).toFixed(2)} cm`;
+        }
+
+        // Fenstergröße überwachen, um Canvas anzupassen
+        window.addEventListener('resize', draw);
+
+        // Erstes Zeichnen, wenn alles geladen ist
+        window.onload = function () {
+            updateValues();
+        };
+
+    </script>
+</body>
+</html>
