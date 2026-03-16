@@ -154,6 +154,16 @@
       .study-card { grid-template-columns: 1fr; }
       .tip-card.open { grid-column: auto; }
     }
+    .collapsible-card { cursor: pointer; }
+.collapsible-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(20,60,110,0.14); }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.card-header-text { flex: 1; }
+.tool-meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+.card-toggle { font-size: 1.3rem; color: var(--accent); flex-shrink: 0; transition: transform 0.3s; line-height: 1; margin-top: 0.1rem; }
+.collapsible-card.open .card-toggle { transform: rotate(45deg); }
+.card-expanded { display: none; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(26,111,181,0.15); }
+.collapsible-card.open .card-expanded { display: block; }
+.card-expanded p { font-size: 0.88rem; color: var(--ink2); line-height: 1.75; font-weight: 300; margin-bottom: 0.7rem; }
   </style>
 </head>
 <body>
@@ -469,13 +479,100 @@
       <h2>KI-Werkzeuge im Überblick</h2>
     </div>
     <div class="tools-grid">
-      <div class="glass-card tool-card"><div class="tool-icon">🤖</div><div class="tool-name">Claude</div><div class="tool-desc">Lange Texte, Differenzierung, sorgfältige Antworten. Gut für Unterrichtsvorbereitung.</div></div>
-      <div class="glass-card tool-card"><div class="tool-icon">💬</div><div class="tool-name">ChatGPT</div><div class="tool-desc">Weit verbreitet, guter Allrounder. Schülerinnen und Schüler kennen es oft bereits.</div></div>
-      <div class="glass-card tool-card"><div class="tool-icon">🔍</div><div class="tool-name">Perplexity</div><div class="tool-desc">KI-Suche mit Quellenangaben. Gut für Recherchen mit Transparenzanspruch.</div></div>
-      <div class="glass-card tool-card"><div class="tool-icon">🎨</div><div class="tool-name">Canva AI</div><div class="tool-desc">Bildgenerierung und Design. Für kreative Fächer und Präsentationen.</div></div>
-      <div class="glass-card tool-card"><div class="tool-icon">📝</div><div class="tool-name">NotebookLM</div><div class="tool-desc">KI arbeitet nur mit eigenen Dokumenten. Ideal für quellenbasierte Arbeit.</div></div>
-      <div class="glass-card tool-card"><div class="tool-icon">🔬</div><div class="tool-name">Wolfram Alpha</div><div class="tool-desc">Physik, Chemie, Mathe – verlässliche Ergebnisse ohne Halluzinieren.</div></div>
+      <div class="tips-grid">
+  <!-- Gemini -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Google · 1M Token</p>
+        <h3>Gemini 3.1 Pro</h3>
+        <p>Multimodale Power & nahtlose Workspace-Integration.</p>
+      </div>
+      <span class="card-toggle">+</span>
     </div>
+    <div class="card-expanded">
+      <p><b>Kapazität:</b> Mit einem Kontextfenster von <b>1 Million Token</b> kann Gemini ganze Lehrbücher oder komplette Kursunterlagen gleichzeitig analysieren.</p>
+      <p><b>Bilderstellung:</b> Nutzt das fortschrittliche Modell <b>Nano Banana 2</b>. Dieses ist besonders optimiert für fotorealistische Assets und hochpräzise <b>technische Skizzen</b>.</p>
+      <p><b>Unterrichtseinsatz:</b> Ideal für die Analyse großer Datensätze und die direkte Erstellung von Materialien in Google Docs und Drive.</p>
+    </div>
+  </div>
+  <!-- Claude -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Anthropic · 1M Token</p>
+        <h3>Claude 4.6 (Opus & Sonnet)</h3>
+        <p>Der Spezialist für Textanalyse, Logik und LaTeX.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Modellvarianten:</b> Mit <b>Opus 4.6</b> für höchste kognitive Anforderungen und <b>Sonnet 4.6</b> für schnelle, präzise Analysen setzt Anthropic Maßstäbe.</p>
+      <p><b>LaTeX-Spezialisierung:</b> Claude verfügt über die beste Unterstützung für wissenschaftlichen Satz. Besonderes Feature: Er kann mit <b>TikZ-Code</b> komplexe <b>technische Zeichnungen selbst erstellen</b> und nahtlos integrieren.</p>
+      <p><b>Hinweis:</b> Claude bietet keine native Bildgenerierung an, brilliert dafür aber bei strukturiertem Code und tiefgehender Literaturanalyse.</p>
+    </div>
+  </div>
+  <!-- ChatGPT -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">OpenAI · 1M Token</p>
+        <h3>ChatGPT (GPT-5.4)</h3>
+        <p>Vielseitiger Allrounder mit neuem „Thinking"-Modus.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Thinking-Modus:</b> Das neue Modell kann „nachdenken", bevor es antwortet. Dies ist besonders hilfreich bei komplexen mathematischen Problemen oder physikalischen Herleitungen.</p>
+      <p><b>Bilder:</b> Integriert ebenfalls <b>Nano Banana 2</b> für kreative Visualisierungen und Illustrationen auf höchstem Niveau.</p>
+      <p><b>Klausuren:</b> Sehr starke Unterstützung bei der Erstellung von LaTeX-Klausurvorlagen und Arbeitsblättern.</p>
+    </div>
+  </div>
+  <!-- NotebookLM -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Google · Abo enthalten</p>
+        <h3>NotebookLM Plus</h3>
+        <p>Quellenbasierte Wissensarbeit & Audio-Overviews.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Abonnement:</b> NotebookLM Plus ist vollständig im <b>Gemini Advanced Abonnement</b> enthalten.</p>
+      <p><b>Output:</b> Erstellt basierend auf hochgeladenen Quellen (PDF, Drive) Audio-Podcasts und interaktive <b>Video-Zusammenfassungen</b>.</p>
+      <p><b>Lernhilfe:</b> Perfekt für Facharbeiten zur Erstellung von Mindmaps, Quizzen und Glossaren direkt aus den eigenen Materialien.</p>
+    </div>
+  </div>
+  <!-- Perplexity -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Perplexity AI</p>
+        <h3>Perplexity</h3>
+        <p>KI-Suche mit Quellenangaben.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p>Gut für Recherchen mit Transparenzanspruch – jede Antwort wird mit Quellenlinks belegt.</p>
+    </div>
+  </div>
+  <!-- Wolfram Alpha -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Wolfram Research</p>
+        <h3>Wolfram Alpha</h3>
+        <p>Physik, Chemie, Mathe – ohne Halluzinieren.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p>Verlässliche Berechnungen und symbolische Mathematik. Ideal als Gegenprobe zu KI-Ergebnissen im naturwissenschaftlichen Unterricht.</p>
+    </div>
+  </div>
+</div>
   </section>
 
   <!-- SIMULATIONEN -->
