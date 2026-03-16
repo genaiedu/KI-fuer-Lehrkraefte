@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KI im Unterricht – Praktisch. Fundiert. Erprobt.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg1: #eef4fb;
+      --ink: #0f1f35;
+      --ink2: #2e4a6a;
+      --muted: #6a87a8;
+      --accent: #1a6fb5;
+      --accent2: #3daed4;
+      --accent3: #0a4a80;
+      --glass-bg: rgba(255,255,255,0.60);
+      --glass-border: rgba(255,255,255,0.85);
+      --glass-shadow: 0 8px 32px rgba(20,60,110,0.10);
+      --blur: blur(18px);
+      --sidebar-w: 240px;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+      --radius: 16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background-color: var(--bg1);
+      background-image:
+        radial-gradient(ellipse at 15% 15%, rgba(100,180,240,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 75%, rgba(26,111,181,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 55% 5%,  rgba(61,174,212,0.13) 0%, transparent 45%);
+      font-family: var(--sans);
+      font-size: 1rem;
+      color: var(--ink);
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; padding: 2.5rem 1.5rem; background: rgba(220,238,255,0.50); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border-right: 1px solid rgba(255,255,255,0.9); display: flex; flex-direction: column; z-index: 100; }
+    .sidebar-logo { font-family: var(--display); font-size: 1.4rem; font-weight: 600; line-height: 1.2; color: var(--ink); margin-bottom: 0.3rem; }
+    .sidebar-logo em { font-style: italic; color: var(--accent2); }
+    .sidebar-sub { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2.5rem; }
+    .sidebar-rule { height: 1px; background: linear-gradient(to right, var(--accent), transparent); margin-bottom: 2rem; }
+    .sidebar nav { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; }
+    .nav-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); padding: 0.8rem 0.8rem 0.3rem; }
+    .sidebar nav a { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 10px; text-decoration: none; color: var(--ink2); font-size: 0.88rem; transition: background 0.2s, color 0.2s; }
+    .sidebar nav a:hover, .sidebar nav a.active { background: rgba(255,255,255,0.75); color: var(--accent3); }
+    .nav-icon { font-size: 1rem; width: 1.4rem; text-align: center; }
+    .sidebar-footer { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; line-height: 1.7; padding-top: 1.5rem; border-top: 1px solid rgba(26,111,181,0.15); }
+    .sidebar-footer a { color: var(--muted); text-decoration: none; }
+    .sidebar-footer a:hover { color: var(--accent); }
+
+    /* ── CONTENT ── */
+    .content { margin-left: var(--sidebar-w); flex: 1; padding: 3rem 3rem 6rem; max-width: calc(100% - var(--sidebar-w)); }
+
+    /* ── HERO ── */
+    .hero { background: var(--glass-bg); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--glass-shadow); padding: 3.5rem; margin-bottom: 3rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(61,174,212,0.18), transparent 70%); pointer-events: none; }
+    .hero-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .hero h1 { font-family: var(--display); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 600; line-height: 1.15; margin-bottom: 1rem; }
+    .hero h1 em { font-style: italic; color: var(--accent2); }
+    .hero p { font-size: 1rem; color: var(--ink2); max-width: 580px; line-height: 1.75; font-weight: 300; }
+
+    /* ── SECTION HEADER ── */
+    .section-header { display: flex; align-items: baseline; gap: 0.8rem; margin: 3rem 0 1.5rem; }
+    .section-num { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; }
+    .section-header h2 { font-family: var(--display); font-size: 1.9rem; font-weight: 600; color: var(--ink); }
+
+    /* ── GLASS CARD ── */
+    .glass-card { background: var(--glass-bg); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--glass-shadow); padding: 1.8rem; transition: transform 0.25s, box-shadow 0.25s; }
+    .glass-card h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.6rem; line-height: 1.3; color: var(--ink); }
+    .glass-card p { font-size: 0.88rem; color: var(--ink2); line-height: 1.68; font-weight: 300; }
+
+    /* ── TIPP ACCORDION ── */
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
+
+    .tip-card { cursor: pointer; border: 1px solid var(--glass-border); transition: transform 0.25s, box-shadow 0.25s; }
+    .tip-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(20,60,110,0.14); }
+    .tip-card.open { grid-column: auto; transform: none; }
+
+    .tip-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .tip-header-text { flex: 1; }
+    .tip-toggle { font-size: 1.2rem; color: var(--accent); flex-shrink: 0; transition: transform 0.3s; line-height: 1; margin-top: 0.1rem; }
+    .tip-card.open .tip-toggle { transform: rotate(45deg); }
+
+    .tip-num { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .tip-tag { display: inline-block; margin-top: 1rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.2rem 0.7rem; background: rgba(61,174,212,0.12); color: var(--accent); border-radius: 20px; text-transform: uppercase; }
+
+    .tip-expanded {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(26,111,181,0.15);
+    }
+    .tip-card.open .tip-expanded { display: block; }
+
+    .tip-expanded p { font-size: 0.92rem; color: var(--ink2); line-height: 1.8; font-weight: 300; margin-bottom: 1rem; }
+    .tip-expanded h4 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 1.2rem 0 0.6rem; }
+    .tip-refs { display: flex; flex-direction: column; gap: 0.4rem; }
+    .tip-refs a { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(26,111,181,0.3); padding-bottom: 0.1rem; align-self: flex-start; }
+    .tip-refs a:hover { color: var(--accent3); }
+
+    /* ── MATERIALIEN ── */
+    .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+    .material-card { display: flex; flex-direction: column; gap: 0.8rem; text-decoration: none; color: inherit; transition: transform 0.25s, box-shadow 0.25s; }
+    .material-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(20,60,110,0.14); }
+    .material-type { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); }
+    .material-card h3 { margin-bottom: 0; }
+    .material-card p { flex: 1; }
+    .material-link { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid rgba(26,111,181,0.35); padding-bottom: 0.1rem; align-self: flex-start; }
+
+    /* ── STUDIES ── */
+    .studies-list { display: flex; flex-direction: column; gap: 1rem; }
+    .study-card { display: grid; grid-template-columns: 3rem 1fr; gap: 1.2rem; align-items: start; }
+    .study-year { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 500; padding-top: 0.15rem; }
+    .study-authors { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.45rem; text-transform: uppercase; }
+    .study-card a { display: inline-block; margin-top: 0.5rem; font-family: var(--mono); font-size: 0.65rem; color: var(--accent); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid rgba(26,111,181,0.4); }
+    .study-card a:hover { color: var(--accent3); }
+
+    /* ── TOOLS ── */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .tool-card { text-align: center; cursor: default; transition: transform 0.25s, box-shadow 0.25s, background 0.25s; }
+    .tool-card:hover { background: rgba(10,74,128,0.88); color: #e8f3ff; transform: translateY(-3px); }
+    .tool-card:hover .tool-desc { color: #8ab4d8; }
+    .tool-icon { font-size: 1.7rem; margin-bottom: 0.5rem; }
+    .tool-name { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .tool-desc { font-size: 0.78rem; color: var(--ink2); line-height: 1.5; font-weight: 300; }
+
+    /* ── FORUM ── */
+    .forum-card { background: rgba(10,74,128,0.90); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid rgba(100,180,240,0.2); border-radius: var(--radius); padding: 3rem; margin-top: 3rem; position: relative; overflow: hidden; }
+    .forum-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--accent2), var(--accent)); border-radius: var(--radius) var(--radius) 0 0; }
+    .forum-card h2 { font-family: var(--display); font-size: 1.8rem; color: #e8f3ff; margin-bottom: 0.5rem; }
+    .forum-card > p { color: #7aaac8; font-size: 0.92rem; margin-bottom: 2rem; font-weight: 300; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    .mobile-nav-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.5rem 0.8rem; font-size: 1.2rem; cursor: pointer; }
+    @media (max-width: 768px) {
+      .mobile-nav-toggle { display: block; }
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .content { margin-left: 0; max-width: 100%; padding: 5rem 1.2rem 4rem; }
+      .hero { padding: 2rem; }
+      .forum-card { padding: 1.8rem 1.2rem; }
+      .study-card { grid-template-columns: 1fr; }
+      .tip-card.open { grid-column: auto; }
+    }
+    .collapsible-card { cursor: pointer; }
+.collapsible-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(20,60,110,0.14); }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.card-header-text { flex: 1; }
+.tool-meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+.card-toggle { font-size: 1.3rem; color: var(--accent); flex-shrink: 0; transition: transform 0.3s; line-height: 1; margin-top: 0.1rem; }
+.collapsible-card.open .card-toggle { transform: rotate(45deg); }
+.card-expanded { display: none; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(26,111,181,0.15); }
+.collapsible-card.open .card-expanded { display: block; }
+.card-expanded p { font-size: 0.88rem; color: var(--ink2); line-height: 1.75; font-weight: 300; margin-bottom: 0.7rem; }
+  </style>
+</head>
+<body>
+
+<button class="mobile-nav-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Menü">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">KI im<br><em>Unterricht</em></div>
+  <div class="sidebar-sub">Gymnasium · NRW</div>
+  <div class="sidebar-rule"></div>
+  <nav>
+    <span class="nav-label">Inhalt</span>
+    <a href="#tipps"><span class="nav-icon">💡</span> Praktische Tipps</a>
+    <a href="#materialien"><span class="nav-icon">📄</span> Materialien</a>
+    <a href="#studien"><span class="nav-icon">📚</span> Aktuelle Studien</a>
+    <a href="#tools"><span class="nav-icon">🔧</span> KI-Werkzeuge</a>
+    <a href="#simulationen"><span class="nav-icon">🔬</span> Simulationen</a>
+    <a href="#forum"><span class="nav-icon">💬</span> Forum</a>
+  </nav>
+  <div class="sidebar-footer">
+    Gymnasium Thomaeum<br>Kempen · NRW<br><br>
+    <a href="/cdn-cgi/l/email-protection#52273c2637203037203512263a3d3f3337273f7c3637">Kontakt</a> ·
+    <a href="https://github.com/ClausUnterberg/KI-fuer-Lehrkraefte" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</aside>
+
+<main class="content">
+
+  <div class="hero">
+    <div style="display:flex; align-items:center; gap:2.5rem; flex-wrap:wrap;">
+      <div style="flex:1; min-width:260px;">
+        <p class="hero-tag">Praktisch · Fundiert · Erprobt</p>
+        <h1>KI im Unterricht –<br><em>was wirklich funktioniert.</em></h1>
+        <p>Konkrete Tipps für den Einsatz von KI-Werkzeugen, Hinweise auf aktuelle Forschung und ein Forum für den kollegialen Austausch. Kein Hype – sondern fundierte Praxis.</p>
+      </div>
+      <div style="flex-shrink:0;">
+        <img src="images/denker.png" alt="KI-Denker"
+          style="width:220px; opacity:0.92; filter:drop-shadow(0 8px 24px rgba(20,60,110,0.18)); mix-blend-mode:multiply;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TIPPS ═══ -->
+  <section id="tipps">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2>Praktische Tipps</h2>
+    </div>
+    <p style="font-size:0.82rem; color:var(--muted); font-family:var(--mono); margin-bottom:1.2rem; letter-spacing:0.05em;">Auf eine Karte klicken für mehr Details und Literaturverweise.</p>
+    <div class="tips-grid">
+
+      <!-- TIPP 01 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 01</p>
+            <h3>KI als Sparringspartner, nicht als Ghostwriter</h3>
+            <p>Schülerinnen und Schüler sollen KI nutzen, um Ideen zu entwickeln und Argumente zu prüfen – nicht um fertige Texte zu übernehmen.</p>
+            <span class="tip-tag">Methodik</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Der produktive Einsatz von KI im Unterricht erfordert eine klare Rollenzuweisung: KI als Gesprächspartner, nicht als Automat für Fertiglösungen. Wenn Schülerinnen und Schüler lernen, KI aktiv zu befragen, Antworten zu hinterfragen und eigene Positionen zu entwickeln, entsteht ein kognitiv anspruchsvoller Prozess, der dem bloßen Kopieren weit überlegen ist.</p>
+          <p>Bewährt hat sich das sogenannte „Socratic Prompting": Die KI wird nicht um eine Antwort gebeten, sondern um Rückfragen, die den eigenen Denkprozess vertiefen. Auch die Methode des „Steelmanning" – die KI formuliert das stärkste Gegenargument zur eigenen Position – fördert kritisches Denken erheblich.</p>
+          <p>Mollick & Mollick (2023) beschreiben konkrete Unterrichtsszenarien, in denen KI als „Thought Partner" eingesetzt wird: Studierende und Schülerinnen und Schüler erreichen messbar tiefere Auseinandersetzung mit Inhalten, wenn KI als Dialogpartner fungiert statt als Antwortmaschine.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://ssrn.com/abstract=4380899" target="_blank" rel="noopener">Mollick & Mollick (2023) – Assigning AI: Seven Approaches for Students</a>
+            <a href="https://doi.org/10.1016/j.compedu.2023.104893" target="_blank" rel="noopener">Kasneci et al. (2023) – ChatGPT for Good? On Opportunities and Challenges</a>
+            <a href="https://doi.org/10.1038/s41562-024-01872-1" target="_blank" rel="noopener">Noy & Zhang (2023) – Experimental Evidence on the Productivity Effects of Generative AI</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 02 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 02</p>
+            <h3>Prompts gemeinsam erarbeiten</h3>
+            <p>Ein guter Prompt ist keine Trivialität. Im Unterricht lohnt es sich, Schritt für Schritt zu zeigen, wie man eine KI-Anfrage präzisiert.</p>
+            <span class="tip-tag">Unterrichtspraxis</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Prompt Engineering ist eine Schlüsselkompetenz im Umgang mit KI – und zugleich ein hervorragender Anlass, über Sprache, Präzision und Kommunikation nachzudenken. Ein schlecht formulierter Prompt liefert nichtssagende Ergebnisse; ein präziser Prompt zeigt, dass man verstanden hat, was man eigentlich wissen will.</p>
+          <p>Im Unterricht empfiehlt sich ein strukturiertes Vorgehen: Zunächst formulieren Schülerinnen und Schüler einen ersten Prompt, analysieren dann gemeinsam, warum die Antwort unbefriedigend ist, und verbessern die Anfrage iterativ. Elemente eines guten Prompts sind: Kontext (wer fragt?), Aufgabe (was soll getan werden?), Format (wie soll die Antwort aussehen?) und Einschränkungen (was soll ausgeschlossen werden?).</p>
+          <p>White et al. (2023) haben in einer systematischen Analyse gezeigt, dass strukturiertes Prompt Engineering die Qualität von KI-Ausgaben erheblich verbessert. Die Fähigkeit, präzise Anfragen zu formulieren, korreliert dabei eng mit allgemeiner sprachlicher und analytischer Kompetenz.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://arxiv.org/abs/2302.11382" target="_blank" rel="noopener">White et al. (2023) – A Prompt Pattern Catalog to Enhance Prompt Engineering</a>
+            <a href="https://doi.org/10.1145/3544549.3585664" target="_blank" rel="noopener">Zamfirescu-Pereira et al. (2023) – Why Johnny Can't Prompt</a>
+            <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">Wei et al. (2022) – Chain-of-Thought Prompting Elicits Reasoning in LLMs</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 03 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 03</p>
+            <h3>KI-Ergebnisse kritisch hinterfragen</h3>
+            <p>KI-Systeme halluzinieren. Aufgaben, bei denen KI-Ausgaben überprüft und korrigiert werden müssen, sind hervorragende Übungen für Quellenkritik.</p>
+            <span class="tip-tag">Medienkompetenz</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Large Language Models erzeugen plausibel klingende Texte – auch dann, wenn die enthaltenen Fakten falsch sind. Dieses Phänomen, bekannt als „Halluzination", ist kein Fehler, der behoben werden kann, sondern eine strukturelle Eigenschaft dieser Systeme. Schülerinnen und Schüler müssen lernen, KI-Ausgaben grundsätzlich als Hypothesen zu behandeln, die Überprüfung erfordern.</p>
+          <p>Didaktisch lassen sich daraus produktive Aufgabenformate ableiten: Schülerinnen und Schüler erhalten absichtlich fehlerhafte KI-Ausgaben und müssen Fehler identifizieren, begründen und korrigieren. Diese Übung schult nicht nur den Umgang mit KI, sondern auch allgemeine Kompetenzen der Informationsevaluation und des wissenschaftlichen Arbeitens.</p>
+          <p>Ji et al. (2023) haben in einer umfassenden Übersicht gezeigt, dass Halluzinationen in allen aktuellen LLMs auftreten und domänenabhängig stark variieren. Besonders in naturwissenschaftlichen und historischen Kontexten ist Vorsicht geboten.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://doi.org/10.1145/3571730" target="_blank" rel="noopener">Ji et al. (2023) – Survey of Hallucination in Natural Language Generation</a>
+            <a href="https://arxiv.org/abs/2305.14251" target="_blank" rel="noopener">Maynez et al. (2023) – On Faithfulness and Factuality in Abstractive Summarization</a>
+            <a href="https://doi.org/10.1038/s41586-021-03819-2" target="_blank" rel="noopener">Bommasani et al. (2022) – On the Opportunities and Risks of Foundation Models</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 04 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 04</p>
+            <h3>Transparenz als Grundregel</h3>
+            <p>Klare Absprachen im Kurs: Wann und wie darf KI eingesetzt werden? Schülerinnen und Schüler sollten KI-Nutzung dokumentieren.</p>
+            <span class="tip-tag">Schulentwicklung</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Der Einsatz von KI im schulischen Kontext wirft grundlegende Fragen der Leistungsbewertung auf: Wer hat eigentlich geleistet? Die unklare Grenze zwischen eigener Arbeit und KI-Unterstützung führt zu Vertrauensverlust und Frustration – bei Lehrkräften wie bei Schülerinnen und Schülern, die redlich arbeiten.</p>
+          <p>Die Lösung liegt nicht im Verbot, sondern in transparenten Vereinbarungen: KI-Nutzung wird explizit deklariert, ähnlich wie die Nutzung anderer Hilfsmittel. Schülerinnen und Schüler führen ein kurzes Protokoll, welche KI-Werkzeuge sie wie eingesetzt haben. Diese Reflexion ist selbst ein Lernziel.</p>
+          <p>Auf Schulebene empfehlen sich schriftlich fixierte KI-Leitlinien, die Fächer, Jahrgangsstufen und Aufgabentypen differenziert regeln. Internationale Erfahrungen zeigen, dass schulweite Konzepte deutlich besser funktionieren als individuelle Lösungen einzelner Lehrkräfte.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://doi.org/10.1080/02680513.2023.2246999" target="_blank" rel="noopener">Perkins (2023) – Academic Integrity Considerations of AI Large Language Models</a>
+            <a href="https://www.oecd.org/education/ai-and-education.htm" target="_blank" rel="noopener">OECD (2023) – AI and Education: Guidance for Policy-Makers</a>
+            <a href="https://doi.org/10.31244/9783830998" target="_blank" rel="noopener">Lorenz, Endberg & Eickelmann (2024) – KI im deutschen Schulunterricht</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 05 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 05</p>
+            <h3>Differenzierung durch KI</h3>
+            <p>KI kann individuelle Erklärungen auf verschiedenen Niveaustufen liefern – hilfreich bei Verständnislücken.</p>
+            <span class="tip-tag">Differenzierung</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Eine der größten Herausforderungen im Unterricht ist die Heterogenität der Lerngruppen. KI bietet hier ein realistisches Potenzial zur Unterstützung: Schülerinnen und Schüler können sich Inhalte auf ihrem individuellen Niveau erklären lassen, Beispiele aus ihrem Erfahrungsbereich einfordern oder Aufgaben schrittweise bearbeiten, ohne dass die Lehrkraft für jeden Schritt verfügbar sein muss.</p>
+          <p>Besonders wirksam ist der Einsatz von KI als „Erklärer auf Abruf": Wenn ein Schüler oder eine Schülerin einen Begriff nicht versteht, kann er oder sie eine Erklärung in eigenen Worten, mit Analogien oder auf verschiedenen Abstraktionsniveaus anfordern. Das entlastet die Lehrkraft und fördert die Selbstständigkeit.</p>
+          <p>Zu beachten ist, dass KI-gestützte Differenzierung didaktisch eingebettet sein muss. Kovanović et al. (2023) zeigen, dass adaptive KI-Systeme nur dann Lernerfolge steigern, wenn sie in einen strukturierten Lernprozess eingebettet sind und Reflexionsphasen enthalten.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://doi.org/10.1111/bjet.13337" target="_blank" rel="noopener">Kovanović et al. (2023) – Towards the Future of AI-Augmented Human Tutoring</a>
+            <a href="https://doi.org/10.1145/3636555.3636872" target="_blank" rel="noopener">Dunn & Fischer (2024) – Vivian: A Conversational AI Tutor</a>
+            <a href="https://doi.org/10.1007/s10758-023-09680-2" target="_blank" rel="noopener">Georgiou et al. (2023) – AI and the Future of Education</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 06 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 06</p>
+            <h3>Lernprozess statt Ergebnis bewerten</h3>
+            <p>Bei KI-gestützten Aufgaben verschiebt sich der Bewertungsfokus. Portfolios und Reflexionsprotokolle machen den Umgang mit KI sichtbar.</p>
+            <span class="tip-tag">Leistungsmessung</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Wenn KI jederzeit brauchbare Texte, Lösungen und Zusammenfassungen produzieren kann, verlieren klassische Leistungsnachweise an Aussagekraft. Klausuren, die reines Reproduzieren oder einfaches Anwenden prüfen, können durch KI unterlaufen werden. Die Frage ist nicht, wie man das verhindert, sondern wie man Kompetenzen bewertet, die KI nicht ersetzen kann.</p>
+          <p>Dazu gehören: kritisches Urteilsvermögen, die Fähigkeit zur Reflexion des eigenen Lernprozesses, mündliche Verteidigung von Ergebnissen und das Erkennen der Grenzen von KI-Ausgaben. Bewährte Formate sind Lernportfolios mit Prozessdokumentation, mündliche Prüfungen und Aufgaben, die lokales oder personales Wissen erfordern.</p>
+          <p>Researchers wie Boud & Dawson (2023) argumentieren, dass KI-resistente Aufgaben nicht primär auf Kontrolle abzielen sollten, sondern auf den Aufbau von Kompetenzen, die langfristig wertvoll sind – unabhängig davon, welche Werkzeuge verfügbar sind.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://doi.org/10.1080/02602938.2023.2190148" target="_blank" rel="noopener">Boud & Dawson (2023) – What is the Point of Assessment in a World of AI?</a>
+            <a href="https://doi.org/10.1111/bjet.13306" target="_blank" rel="noopener">Bearman & Luckin (2023) – Preparing University Assessment for a World with AI</a>
+            <a href="https://ssrn.com/abstract=4500168" target="_blank" rel="noopener">Bastani et al. (2023) – Generative AI Can Harm Learning</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 07 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 07</p>
+            <h3>KI-Ethik explizit thematisieren</h3>
+            <p>Datenschutz, Bias, Verantwortung – diese Fragen gehören in den Unterricht.</p>
+            <span class="tip-tag">KI-Ethik</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>KI-Systeme sind keine neutralen Werkzeuge. Sie sind auf der Basis menschlich erzeugter Daten trainiert und reproduzieren deshalb auch gesellschaftliche Vorurteile, Ungleichheiten und Machtstrukturen. Schülerinnen und Schüler, die KI unkritisch nutzen, übernehmen diese Verzerrungen möglicherweise unbemerkt.</p>
+          <p>Im Unterricht lohnt es sich, konkrete Beispiele zu analysieren: Welche Gruppen sind in KI-Trainingsdaten unterrepräsentiert? Was bedeutet es, wenn eine KI bestimmte Berufe automatisch mit bestimmten Geschlechtern verbindet? Wer trägt die Verantwortung für Entscheidungen, die auf KI-Empfehlungen basieren?</p>
+          <p>Darüber hinaus sind Datenschutzfragen im Schulkontext unmittelbar relevant: Welche Daten werden an KI-Dienste übermittelt? Welche Bedingungen gelten für Minderjährige? Die EU-KI-Verordnung (AI Act, 2024) setzt hier neue rechtliche Rahmen, die auch für den schulischen Einsatz von Bedeutung sind.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://doi.org/10.1145/3442188.3445922" target="_blank" rel="noopener">Bender et al. (2021) – On the Dangers of Stochastic Parrots</a>
+            <a href="https://artificialintelligenceact.eu" target="_blank" rel="noopener">EU AI Act (2024) – Volltext der EU-KI-Verordnung</a>
+            <a href="https://doi.org/10.1007/s10676-021-09583-1" target="_blank" rel="noopener">Floridi et al. (2021) – An Ethical Framework for a Good AI Society</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPP 08 -->
+      <div class="glass-card tip-card" onclick="toggleTip(this)">
+        <div class="tip-header">
+          <div class="tip-header-text">
+            <p class="tip-num">Tipp 08</p>
+            <h3>Routinen einführen, nicht improvisieren</h3>
+            <p>Feste „KI-Phasen" schützen vor unkritischer Abhängigkeit: erst selbst denken, dann KI befragen.</p>
+            <span class="tip-tag">Unterrichtsplanung</span>
+          </div>
+          <span class="tip-toggle">+</span>
+        </div>
+        <div class="tip-expanded">
+          <p>Der ad-hoc-Einsatz von KI – wann immer etwas nicht sofort klar ist – birgt die Gefahr, dass Schülerinnen und Schüler kognitive Anstrengung systematisch vermeiden. Das ist keine Faulheit, sondern eine natürliche Reaktion auf ein verfügbares Hilfsmittel. Didaktisch muss dem entgegengesteuert werden.</p>
+          <p>Bewährt haben sich feste Phasenstrukturen: In einer ersten Phase bearbeiten Schülerinnen und Schüler ein Problem eigenständig und dokumentieren, wo sie nicht weiterkommen. Erst in einer zweiten Phase darf KI konsultiert werden – mit der Aufgabe, die KI-Antwort kritisch zu bewerten und in eigene Worte zu fassen. Diese Struktur schützt den Lernprozess, ohne KI zu verbannen.</p>
+          <p>Die Forschung von Bastani et al. (2023) zeigt eindrücklich, was passiert, wenn diese Phasentrennung fehlt: Schülerinnen und Schüler, die KI ohne Einschränkungen nutzen, erreichen kurzfristig bessere Ergebnisse, schneiden aber bei späteren Tests ohne KI deutlich schlechter ab als eine Kontrollgruppe.</p>
+          <h4>Weiterführende Literatur</h4>
+          <div class="tip-refs">
+            <a href="https://ssrn.com/abstract=4500168" target="_blank" rel="noopener">Bastani et al. (2023) – Generative AI Can Harm Learning</a>
+            <a href="https://doi.org/10.1016/j.compedu.2010.03.003" target="_blank" rel="noopener">Kirschner, Sweller & Clark (2010) – Why Minimal Guidance During Instruction Does Not Work</a>
+            <a href="https://doi.org/10.1111/bjet.13337" target="_blank" rel="noopener">Kovanović et al. (2023) – Towards the Future of AI-Augmented Human Tutoring</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ MATERIALIEN ═══ -->
+  <section id="materialien">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2>Materialien</h2>
+    </div>
+    <div class="materials-grid">
+      <a class="glass-card material-card" href="https://1drv.ms/b/c/40c2f599c46c5bbd/IQB8d6Apt1UERJBQOkp2y8-_ATBvaU3YR9W7a42_1ULfjYU?e=mKpT7W" target="_blank" rel="noopener">
+        <span class="material-type">📊 Präsentation</span>
+        <h3>Integration von KI in den Unterricht</h3>
+        <p>Eine mit NotebookLM erstellte Präsentation zu Möglichkeiten der KI-Integration – zugleich ein Praxisbeispiel für den Einsatz von KI-Werkzeugen.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+      <a class="glass-card material-card" href="materialien/Vom%20Schatten%20zur%20Substanz%20praktische%20Tipps%20zum%20Einsatz%20von%20KI%20im%20Unterricht.pdf" target="_blank" rel="noopener">
+        <span class="material-type">📖 Buch</span>
+        <h3>Vom Schatten zur Substanz</h3>
+        <p>Praktische Tipps zum Einsatz von KI im Unterricht – von der Unterrichtsvorbereitung bis zur Leistungsbewertung.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+      <a class="glass-card material-card" href="materialien/wie-denkt-eine-maschine_1%20%E2%80%93%20Kopie.pdf" target="_blank" rel="noopener">
+        <span class="material-type">📖 Buch</span>
+        <h3>Wie denkt eine Maschine?</h3>
+        <p>Verständliche Erklärung, wie ein Large Language Model funktioniert – auch ohne technischen Hintergrund lesbar.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+      <a class="glass-card material-card" href="materialien/KI_Transformation.pdf" target="_blank" rel="noopener">
+        <span class="material-type">🔬 Studie</span>
+        <h3>Kognitive und strukturelle Transformation durch KI</h3>
+        <p>Vergleichende Analyse der Auswirkungen von KI auf Lernprozesse und Berufsfelder in Deutschland 2025.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+      <a class="glass-card material-card" href="materialien/Apps-erstellen-mit-KI-Anleitung.pdf" target="_blank" rel="noopener">
+        <span class="material-type">🛠️ Anleitung</span>
+        <h3>Apps erstellen und hosten mit KI</h3>
+        <p>Schritt-für-Schritt-Anleitung zur Entwicklung eigener Web-Apps mit KI – auch ohne Programmierkenntnisse.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+      <a class="glass-card material-card" href="materialien/Anleitung_LaTeX_KI_final-SURFACELAPTOP.pdf" target="_blank" rel="noopener">
+        <span class="material-type">🛠️ Anleitung</span>
+        <h3>LaTeX mit KI</h3>
+        <p>Anleitung zur Erstellung professioneller Dokumente mit LaTeX und KI-Unterstützung – von der Installation bis zu fertigen Unterrichtsmaterialien.</p>
+        <span class="material-link">→ Öffnen</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ STUDIEN ═══ -->
+  <section id="studien">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2>Aktuelle Forschung</h2>
+    </div>
+    <div class="studies-list">
+      <div class="glass-card study-card"><span class="study-year">2023</span><div><h3>Generative AI Can Harm Learning</h3><p class="study-authors">Bastani, H., Bastani, O., Sungu, A. et al.</p><p>Kontrollierte Feldstudie: KI-Unterstützung verbessert kurzfristig die Leistung, senkt aber den Lernerfolg bei späteren Tests ohne KI.</p><a href="https://ssrn.com/abstract=4500168" target="_blank" rel="noopener">→ SSRN Preprint</a></div></div>
+      <div class="glass-card study-card"><span class="study-year">2023</span><div><h3>AI and the Future of Education</h3><p class="study-authors">Georgiou, D., Kyza, E. A. &amp; Hadjichambis, A. C.</p><p>Chancen für adaptives Feedback und Differenzierung, aber auch Risiken durch Kompetenzatrophie.</p><a href="https://doi.org/10.1007/s10758-023-09680-2" target="_blank" rel="noopener">→ Tech Know Learn</a></div></div>
+      <div class="glass-card study-card"><span class="study-year">2024</span><div><h3>ChatGPT and Student Learning Outcomes</h3><p class="study-authors">Vana, P., Bertoni, M. &amp; Nicodemo, C.</p><p>Randomisierte Kontrollstudie: Kurzfristig bessere Texte, aber schwächere eigenständige Schreibleistung bei Folgeaufgaben.</p><a href="https://doi.org/10.3386/w32467" target="_blank" rel="noopener">→ NBER Working Paper</a></div></div>
+      <div class="glass-card study-card"><span class="study-year">2024</span><div><h3>Vivian: A Conversational AI Tutor</h3><p class="study-authors">Dunn, M. &amp; Fischer, C.</p><p>Bei strukturiertem Einsatz mit Reflexionspflichten signifikante Lerngewinne. Entscheidend war die didaktische Einbettung.</p><a href="https://doi.org/10.1145/3636555.3636872" target="_blank" rel="noopener">→ ACM Digital Library</a></div></div>
+      <div class="glass-card study-card"><span class="study-year">2024</span><div><h3>KI im deutschen Schulunterricht</h3><p class="study-authors">Lorenz, R., Endberg, M. &amp; Eickelmann, B.</p><p>Repräsentative Befragung: Hohes Interesse, aber erhebliche Unsicherheit bezüglich Leistungsbewertung und Datenschutz.</p><a href="https://doi.org/10.31244/9783830998" target="_blank" rel="noopener">→ Waxmann Verlag</a></div></div>
+      <div class="glass-card study-card"><span class="study-year">2023</span><div><h3>Large Language Models and the Future of Education</h3><p class="study-authors">Mollick, E. &amp; Mollick, L.</p><p>Konkrete Unterrichtsszenarien: von simulierten Expertengesprächen bis zu adaptivem Selbsttest.</p><a href="https://ssrn.com/abstract=4380899" target="_blank" rel="noopener">→ SSRN</a></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ TOOLS ═══ -->
+  <section id="tools">
+    <div class="section-header">
+      <span class="section-num">04 —</span>
+      <h2>KI-Werkzeuge im Überblick</h2>
+    </div>
+    <div class="tips-grid">
+  <!-- Gemini -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Google · 1M Token</p>
+        <h3>Gemini 3.1 Pro</h3>
+        <p>Multimodale Power & nahtlose Workspace-Integration.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Kapazität:</b> Mit einem Kontextfenster von <b>1 Million Token</b> kann Gemini ganze Lehrbücher oder komplette Kursunterlagen gleichzeitig analysieren.</p>
+      <p><b>Bilderstellung:</b> Nutzt das fortschrittliche Modell <b>Nano Banana 2</b>. Dieses ist besonders optimiert für fotorealistische Assets und hochpräzise <b>technische Skizzen</b>.</p>
+      <p><b>Unterrichtseinsatz:</b> Ideal für die Analyse großer Datensätze und die direkte Erstellung von Materialien in Google Docs und Drive.</p>
+    </div>
+  </div>
+  <!-- Claude -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Anthropic · 1M Token</p>
+        <h3>Claude 4.6 (Opus & Sonnet)</h3>
+        <p>Der Spezialist für Textanalyse, Logik und LaTeX.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Modellvarianten:</b> Mit <b>Opus 4.6</b> für höchste kognitive Anforderungen und <b>Sonnet 4.6</b> für schnelle, präzise Analysen setzt Anthropic Maßstäbe.</p>
+      <p><b>LaTeX-Spezialisierung:</b> Claude verfügt über die beste Unterstützung für wissenschaftlichen Satz. Besonderes Feature: Er kann mit <b>TikZ-Code</b> komplexe <b>technische Zeichnungen selbst erstellen</b> und nahtlos integrieren.</p>
+      <p><b>Hinweis:</b> Claude bietet keine native Bildgenerierung an, brilliert dafür aber bei strukturiertem Code und tiefgehender Literaturanalyse.</p>
+    </div>
+  </div>
+  <!-- ChatGPT -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">OpenAI · 1M Token</p>
+        <h3>ChatGPT (GPT-5.4)</h3>
+        <p>Vielseitiger Allrounder mit neuem „Thinking"-Modus.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Thinking-Modus:</b> Das neue Modell kann „nachdenken", bevor es antwortet. Dies ist besonders hilfreich bei komplexen mathematischen Problemen oder physikalischen Herleitungen.</p>
+      <p><b>Bilder:</b> Integriert ebenfalls <b>Nano Banana 2</b> für kreative Visualisierungen und Illustrationen auf höchstem Niveau.</p>
+      <p><b>Klausuren:</b> Sehr starke Unterstützung bei der Erstellung von LaTeX-Klausurvorlagen und Arbeitsblättern.</p>
+    </div>
+  </div>
+  <!-- NotebookLM -->
+  <div class="glass-card collapsible-card" onclick="toggleTip(this)">
+    <div class="card-header">
+      <div class="card-header-text">
+        <p class="tool-meta">Google · Abo enthalten</p>
+        <h3>NotebookLM Plus</h3>
+        <p>Quellenbasierte Wissensarbeit & Audio-Overviews.</p>
+      </div>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-expanded">
+      <p><b>Abonnement:</b> NotebookLM Plus ist vollständig im <b>Gemini Advanced Abonnement</b> enthalten.</p>
+      <p><b>Output:</b> Erstellt basierend auf hochgeladenen Quellen (PDF, Drive) Audio-Podcasts und interaktive <b>Video-Zusammenfassungen</b>.</p>
+      <p><b>Lernhilfe:</b> Perfekt für Facharbeiten zur Erstellung von Mindmaps, Quizzen und Glossaren direkt aus den eigenen Materialien.</p>
+    </div>
+  </div>
+  </div>
+  </section>
+
+  <!-- SIMULATIONEN -->
+  <section id="simulationen">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2>Interaktive Simulationen</h2>
+    </div>
+    <div class="materials-grid">
+
+      <a class="glass-card material-card" href="sims/weltbild.html" target="_blank" rel="noopener">
+        <span class="material-type">🌍 Astronomie</span>
+        <h3>Geo- und Heliozentrisches Weltbild</h3>
+        <p>Animierte Planetenbahnen mit Umschalter zwischen dem geozentrischen und heliozentrischen Modell. Die Epizykel werden in Echtzeit aufgezeichnet.</p>
+        <span class="material-link">→ Simulation öffnen</span>
+      </a>
+
+      <a class="glass-card material-card" href="sims/Zerfall.html" target="_blank" rel="noopener">
+        <span class="material-type">☢️ Kernphysik</span>
+        <h3>Radioaktiver Zerfall – Würfelmodell</h3>
+        <p>3D-Würfelsimulation mit Physik-Engine. Modelliert den statistischen Charakter des radioaktiven Zerfalls – wahlweise mit W6, 2×W6 (Gauß-Verteilung) oder W20.</p>
+        <span class="material-link">→ Simulation öffnen</span>
+      </a>
+
+      <a class="glass-card material-card" href="sims/Elektronenroehre.html" target="_blank" rel="noopener">
+        <span class="material-type">⚡ Elektrodynamik</span>
+        <h3>Elektronenablenkröhre</h3>
+        <p>Simulation der Kathodenstrahlröhre mit einstellbarer Beschleunigungs- und Ablenkspannung, Plattenabstand und Driftstrecke. Berechnet die Ablenkung in Echtzeit.</p>
+        <span class="material-link">→ Simulation öffnen</span>
+      </a>
+
+      <a class="glass-card material-card" href="sims/kinetik.html" target="_blank" rel="noopener">
+        <span class="material-type">⚗️ Chemie</span>
+        <h3>Chemische Kinetik – A + B ⇌ C + D</h3>
+        <p>Teilchensimulation des chemischen Gleichgewichts. Zeigt, wie sich Hin- und Rückreaktionsrate auf die Gleichgewichtslage auswirken – mit Live-Konzentrationsdiagramm.</p>
+        <span class="material-link">→ Simulation öffnen</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══ FORUM ═══ -->
+  <div class="forum-card" id="forum">
+    <h2>Forum &amp; Diskussion</h2>
+    <p>Erfahrungen austauschen, Fragen stellen, Materialien teilen – hier ist Raum dafür.</p>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://giscus.app/client.js"
+      data-repo="ClausUnterberg/KI-fuer-Lehrkraefte"
+      data-repo-id="R_kgDORmz8tQ"
+      data-category="General"
+      data-category-id="DIC_kwDORmz8tc4C4Y1H"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="de"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </div>
+
+</main>
+
+<script>
+  // Accordion
+  function toggleTip(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.tip-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  // Aktive Navigation
+  const sections = document.querySelectorAll('section[id], [id="forum"]');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.sidebar nav a[href="#${entry.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => navObserver.observe(s));
+
+  // Scroll-Animationen
+  const revealElements = document.querySelectorAll('.glass-card, .section-header, .hero');
+  revealElements.forEach(el => el.classList.add('reveal'));
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80 * i);
+        revealObserver.uno
