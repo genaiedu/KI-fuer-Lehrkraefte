@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geo- und Heliozentrisches Weltbild</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0d1e; font-family: 'DM Sans', system-ui, sans-serif; color: #e8f0ff; }
+    header { padding: 1rem 1.5rem; background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    header h1 { font-size: 1.1rem; font-weight: 500; }
+    .btn { cursor: pointer; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #e8f0ff; padding: 5px 14px; border-radius: 20px; font-size: 13px; transition: background 0.15s; }
+    .btn:hover { background: rgba(255,255,255,0.18); }
+    .btn.active { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); font-weight: 500; }
+    .label { font-size: 12px; color: rgba(255,255,255,0.5); }
+    input[type=range] { width: 90px; accent-color: #60aaff; }
+    canvas { display: block; width: 100%; }
+    .legend { padding: 0.6rem 1.5rem; display: flex; gap: 18px; flex-wrap: wrap; background: rgba(0,0,0,0.3); }
+    .leg { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.6); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Weltbild-Simulation</h1>
+  <button class="btn active" id="btnGeo">Geozentrisch</button>
+  <button class="btn" id="btnHelio">Heliozentrisch</button>
+  <div style="width:1px;height:20px;background:rgba(255,255,255,0.15)"></div>
+  <button class="btn" id="btnPause">Pause</button>
+  <button class="btn" id="btnReset">Bahnen löschen</button>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span class="label">Geschwindigkeit</span>
+    <input type="range" min="1" max="8" value="3" id="speedSlider" step="1">
+    <span class="label" id="speedVal">3×</span>
+  </div>
+</header>
+<canvas id="sim"></canvas>
+<div class="legend">
+  <div class="leg"><div class="dot" style="background:#f5c542"></div>Sonne</div>
+  <div class="leg"><div class="dot" style="background:#60aaff"></div>Erde</div>
+  <div class="leg"><div class="dot" style="background:#c0c0c0"></div>Merkur</div>
+  <div class="leg"><div class="dot" style="background:#e8b87a"></div>Venus</div>
+  <div class="leg"><div class="dot" style="background:#e05c3a"></div>Mars</div>
+  <div class="leg"><div class="dot" style="background:#d4a04a"></div>Jupiter</div>
+  <div class="leg"><div class="dot" style="background:#c8a86a"></div>Saturn</div>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('sim');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - canvas.getBoundingClientRect().top - 40;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const PLANETS = [
+    { name:'Merkur', color:'#c0c0c0', r:4,  orbit:58,  period:0.241, trailColor:'rgba(192,192,192,0.5)' },
+    { name:'Venus',  color:'#e8b87a', r:7,  orbit:90,  period:0.615, trailColor:'rgba(232,184,122,0.5)' },
+    { name:'Erde',   color:'#60aaff', r:8,  orbit:125, period:1.0,   trailColor:'rgba(96,170,255,0.5)' },
+    { name:'Mars',   color:'#e05c3a', r:6,  orbit:170, period:1.881, trailColor:'rgba(224,92,58,0.5)' },
+    { name:'Jupiter',color:'#d4a04a', r:14, orbit:250, period:11.86, trailColor:'rgba(212,160,74,0.4)' },
+    { name:'Saturn', color:'#c8a86a', r:11, orbit:330, period:29.46, trailColor:'rgba(200,168,106,0.4)' },
+  ];
+
+  let mode='geo', paused=false, t=0, speed=3;
+  const TRAIL_MAX=600;
+  let trails={};
+
+  function resetTrails(){ trails={}; PLANETS.forEach(p=>{trails[p.name]=[];}); }
+  resetTrails();
+
+  function helioPos(p,time){ const a=(time/p.period)*2*Math.PI; return {x:p.orbit*Math.cos(a),y:p.orbit*Math.sin(a)}; }
+
+  function draw(){
+    const W=canvas.width, H=canvas.height, cx=W/2, cy=H/2;
+    ctx.fillStyle='#0d0d1e'; ctx.fillRect(0,0,W,H);
+    // stars
+    for(let i=0;i<140;i++){
+      ctx.beginPath(); ctx.arc(((i*137.5+50)%W),((i*97.3+30)%H),(i%3===0?1.2:0.6),0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${0.25+(i%5)*0.08})`; ctx.fill();
+    }
+    const earth=helioPos(PLANETS[2],t);
+    const ox=mode==='geo'?earth.x:0, oy=mode==='geo'?earth.y:0;
+
+    ctx.save(); ctx.translate(cx,cy);
+    if(mode==='helio'){
+      PLANETS.forEach(p=>{
+        ctx.beginPath(); ctx.arc(0,0,p.orbit,0,Math.PI*2);
+        ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=0.5; ctx.stroke();
+      });
+    }
+    PLANETS.forEach(p=>{
+      const tr=trails[p.name]; if(!tr||tr.length<2) return;
+      ctx.beginPath(); ctx.moveTo(tr[0].x,tr[0].y);
+      for(let i=1;i<tr.length;i++) ctx.lineTo(tr[i].x,tr[i].y);
+      ctx.strokeStyle=p.trailColor; ctx.lineWidth=1; ctx.stroke();
+    });
+    const sx=-ox, sy=-oy;
+    ctx.beginPath(); ctx.arc(sx,sy,14,0,Math.PI*2);
+    const sg=ctx.createRadialGradient(sx,sy,2,sx,sy,14);
+    sg.addColorStop(0,'#fff5aa'); sg.addColorStop(0.5,'#f5c542'); sg.addColorStop(1,'#e8a020');
+    ctx.fillStyle=sg; ctx.fill();
+    ctx.beginPath(); ctx.arc(sx,sy,22,0,Math.PI*2); ctx.fillStyle='rgba(245,197,66,0.1)'; ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='10px sans-serif'; ctx.fillText('Sonne',sx+16,sy-10);
+    PLANETS.forEach(p=>{
+      const hp=helioPos(p,t); const dx=hp.x-ox, dy=hp.y-oy;
+      ctx.beginPath(); ctx.arc(dx,dy,p.r,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill();
+      if(p.name==='Saturn'){
+        ctx.beginPath(); ctx.ellipse(dx,dy,p.r*2.2,p.r*0.7,0.3,0,Math.PI*2);
+        ctx.strokeStyle='rgba(200,168,106,0.45)'; ctx.lineWidth=2; ctx.stroke();
+      }
+      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='10px sans-serif'; ctx.fillText(p.name,dx+p.r+3,dy-p.r+3);
+    });
+    if(mode==='geo'){
+      ctx.beginPath(); ctx.arc(0,0,10,0,Math.PI*2);
+      const eg=ctx.createRadialGradient(0,0,1,0,0,10);
+      eg.addColorStop(0,'#90caff'); eg.addColorStop(1,'#3080cc');
+      ctx.fillStyle=eg; ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='10px sans-serif'; ctx.fillText('Erde',12,-8);
+    }
+    ctx.restore();
+
+    // mode label
+    ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.font='500 13px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(mode==='geo'?'Geozentrisches Weltbild':'Heliozentrisches Weltbild', W/2, 24);
+    ctx.textAlign='left';
+  }
+
+  function updateTrails(){
+    const earth=helioPos(PLANETS[2],t);
+    const ox=mode==='geo'?earth.x:0, oy=mode==='geo'?earth.y:0;
+    PLANETS.forEach(p=>{
+      if(mode==='geo'&&p.name==='Erde') return;
+      const hp=helioPos(p,t);
+      trails[p.name].push({x:hp.x-ox,y:hp.y-oy});
+      if(trails[p.name].length>TRAIL_MAX) trails[p.name].shift();
+    });
+  }
+
+  let last=null;
+  function loop(ts){
+    if(!last) last=ts;
+    const dt=(ts-last)/1000; last=ts;
+    if(!paused){ t+=dt*speed*0.15; updateTrails(); }
+    draw(); requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  document.getElementById('btnGeo').addEventListener('click',function(){
+    mode='geo'; resetTrails();
+    this.classList.add('active'); document.getElementById('btnHelio').classList.remove('active');
+  });
+  document.getElementById('btnHelio').addEventListener('click',function(){
+    mode='helio'; resetTrails();
+    this.classList.add('active'); document.getElementById('btnGeo').classList.remove('active');
+  });
+  document.getElementById('btnPause').addEventListener('click',function(){
+    paused=!paused; this.textContent=paused?'Fortsetzen':'Pause'; last=null;
+  });
+  document.getElementById('btnReset').addEventListener('click',function(){ resetTrails(); });
+  document.getElementById('speedSlider').addEventListener('input',function(){
+    speed=parseInt(this.value); document.getElementById('speedVal').textContent=speed+'×';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemische Kinetik Simulation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+        }
+        canvas {
+            border: 2px solid #e5e7eb;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            width: 100%;
+        }
+        #simulationCanvas {
+            height: 400px;
+        }
+        #chartCanvas {
+            height: 250px;
+            margin-top: 2rem;
+        }
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+        .counts {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .counts div {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            width: 23%;
+        }
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+        .chart-legend-item {
+            display: flex;
+            align-items: center;
+        }
+        .chart-legend-color {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-8">
+
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-6">Chemische Kinetik Simulation</h1>
+        <p class="text-center text-gray-600 mb-6">
+            Visualisierung der Reaktion A + B ⇌ C + D. Passen Sie die Anfangswerte und Reaktionskonstanten an und klicken Sie auf "Simulation starten".
+        </p>
+        <canvas id="simulationCanvas"></canvas>
+        
+        <div class="counts mt-4">
+            <div id="countA" class="bg-red-200 text-red-800">A: 0</div>
+            <div id="countB" class="bg-blue-200 text-blue-800">B: 0</div>
+            <div id="countC" class="bg-green-200 text-green-800">C: 0</div>
+            <div id="countD" class="bg-purple-200 text-purple-800">D: 0</div>
+        </div>
+
+        <div class="input-group mt-6">
+            <div>
+                <label for="initialA">Anfangsteilchen A:</label>
+                <input type="number" id="initialA" value="50" min="0">
+            </div>
+            <div>
+                <label for="initialB">Anfangsteilchen B:</label>
+                <input type="number" id="initialB" value="50" min="0">
+            </div>
+            <div>
+                <label for="kf">Reaktionskonstante k<sub>hin</sub> (0-1):</label>
+                <input type="number" id="kf" value="0.1" min="0" max="1" step="0.01">
+            </div>
+            <div>
+                <label for="kr">Reaktionskonstante k<sub>rück</sub> (0-1):</label>
+                <input type="number" id="kr" value="0.05" min="0" max="1" step="0.01">
+            </div>
+        </div>
+
+        <button id="startButton">Simulation starten</button>
+
+        <canvas id="chartCanvas"></canvas>
+        <div class="chart-legend">
+            <div class="chart-legend-item"><div class="chart-legend-color" style="background-color: #ef4444;"></div>A</div>
+            <div class="chart-legend-item"><div class="chart-legend-color" style="background-color: #3b82f6;"></div>B</div>
+            <div class="chart-legend-item"><div class="chart-legend-color" style="background-color: #22c55e;"></div>C</div>
+            <div class="chart-legend-item"><div class="chart-legend-color" style="background-color: #a855f7;"></div>D</div>
+        </div>
+    </div>
+
+    <script>
+        // Get HTML elements
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        const chartCanvas = document.getElementById('chartCanvas');
+        const chartCtx = chartCanvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const initialAInput = document.getElementById('initialA');
+        const initialBInput = document.getElementById('initialB');
+        const kfInput = document.getElementById('kf');
+        const krInput = document.getElementById('kr');
+        const countAElement = document.getElementById('countA');
+        const countBElement = document.getElementById('countB');
+        const countCElement = document.getElementById('countC');
+        const countDElement = document.getElementById('countD');
+
+        // Global variables for the simulation
+        let particles = [];
+        let animationFrameId = null;
+        let isRunning = false;
+        const PARTICLE_RADIUS = 5;
+        const PARTICLE_SPEED = 1;
+        const REACTION_DISTANCE = PARTICLE_RADIUS * 2;
+        let history = [];
+
+        // Particle class
+        class Particle {
+            constructor(type, x, y, vx, vy) {
+                this.type = type;
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, PARTICLE_RADIUS, 0, Math.PI * 2);
+                ctx.fillStyle = this.getColor();
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            getColor() {
+                switch (this.type) {
+                    case 'A': return '#ef4444'; // Red
+                    case 'B': return '#3b82f6'; // Blue
+                    case 'C': return '#22c55e'; // Green
+                    case 'D': return '#a855f7'; // Purple
+                    default: return '#000000';
+                }
+            }
+
+            update(canvasWidth, canvasHeight) {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Collision with walls
+                if (this.x - PARTICLE_RADIUS < 0 || this.x + PARTICLE_RADIUS > canvasWidth) {
+                    this.vx *= -1;
+                }
+                if (this.y - PARTICLE_RADIUS < 0 || this.y + PARTICLE_RADIUS > canvasHeight) {
+                    this.vy *= -1;
+                }
+            }
+        }
+
+        // Function to initialize particles
+        function initializeParticles() {
+            const numA = parseInt(initialAInput.value, 10);
+            const numB = parseInt(initialBInput.value, 10);
+            const totalParticles = numA + numB;
+            particles = [];
+            history = []; // Reset history for new simulation
+
+            if (totalParticles > 500) {
+                // Use a UI element instead of alert()
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-lg shadow-lg border-2 border-red-500';
+                errorMessage.innerHTML = 'Bitte wählen Sie weniger als 500 Partikel, um die Leistung zu gewährleisten.';
+                document.body.appendChild(errorMessage);
+                setTimeout(() => {
+                    document.body.removeChild(errorMessage);
+                }, 3000);
+                return;
+            }
+
+            // Create particles A
+            for (let i = 0; i < numA; i++) {
+                const x = Math.random() * (canvas.width - 2 * PARTICLE_RADIUS) + PARTICLE_RADIUS;
+                const y = Math.random() * (canvas.height - 2 * PARTICLE_RADIUS) + PARTICLE_RADIUS;
+                const vx = (Math.random() - 0.5) * PARTICLE_SPEED * 2;
+                const vy = (Math.random() - 0.5) * PARTICLE_SPEED * 2;
+                particles.push(new Particle('A', x, y, vx, vy));
+            }
+
+            // Create particles B
+            for (let i = 0; i < numB; i++) {
+                const x = Math.random() * (canvas.width - 2 * PARTICLE_RADIUS) + PARTICLE_RADIUS;
+                const y = Math.random() * (canvas.height - 2 * PARTICLE_RADIUS) + PARTICLE_RADIUS;
+                const vx = (Math.random() - 0.5) * PARTICLE_SPEED * 2;
+                const vy = (Math.random() - 0.5) * PARTICLE_SPEED * 2;
+                particles.push(new Particle('B', x, y, vx, vy));
+            }
+        }
+
+        // Function to update particle counts and record history
+        function updateCounts() {
+            let countA = 0;
+            let countB = 0;
+            let countC = 0;
+            let countD = 0;
+            for (const p of particles) {
+                if (p.type === 'A') countA++;
+                else if (p.type === 'B') countB++;
+                else if (p.type === 'C') countC++;
+                else if (p.type === 'D') countD++;
+            }
+            countAElement.textContent = `A: ${countA}`;
+            countBElement.textContent = `B: ${countB}`;
+            countCElement.textContent = `C: ${countC}`;
+            countDElement.textContent = `D: ${countD}`;
+
+            history.push({ a: countA, b: countB, c: countC, d: countD });
+            if (history.length > 500) { // Limit history to prevent performance issues
+                history.shift();
+            }
+        }
+
+        // Function to draw the concentration chart
+        function drawChart() {
+            chartCanvas.width = chartCanvas.offsetWidth;
+            chartCanvas.height = chartCanvas.offsetHeight;
+            chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+
+            if (history.length < 2) return;
+
+            const maxCount = Math.max(...history.map(h => h.a), ...history.map(h => h.b), ...history.map(h => h.c), ...history.map(h => h.d));
+            
+            const xStep = chartCanvas.width / (history.length - 1);
+            const yRatio = chartCanvas.height / (maxCount || 1);
+
+            const species = [
+                { key: 'a', color: '#ef4444', offset: 0 }, // A (red)
+                { key: 'b', color: '#3b82f6', offset: 2 }, // B (blue)
+                { key: 'c', color: '#22c55e', offset: 4 }, // C (green)
+                { key: 'd', color: '#a855f7', offset: 6 }  // D (purple)
+            ];
+
+            species.forEach(s => {
+                chartCtx.beginPath();
+                chartCtx.strokeStyle = s.color;
+                chartCtx.lineWidth = 2;
+                chartCtx.moveTo(0, chartCanvas.height - (history[0][s.key] * yRatio + s.offset));
+
+                for (let i = 1; i < history.length; i++) {
+                    const x = i * xStep;
+                    const y = chartCanvas.height - (history[i][s.key] * yRatio + s.offset);
+                    chartCtx.lineTo(x, y);
+                }
+                chartCtx.stroke();
+            });
+        }
+
+        // Main animation loop
+        function animate() {
+            // Scale the canvas
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const kf = parseFloat(kfInput.value);
+            const kr = parseFloat(krInput.value);
+
+            // Update particles and check for collisions
+            for (let i = 0; i < particles.length; i++) {
+                const p1 = particles[i];
+                p1.update(canvas.width, canvas.height);
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < REACTION_DISTANCE) {
+                        // Collision handling
+                        const isA = p1.type === 'A';
+                        const isB = p2.type === 'B';
+                        const isC = p1.type === 'C';
+                        const isD = p2.type === 'D';
+
+                        // Reaction A + B -> C + D
+                        if ((isA && isB) || (p2.type === 'A' && p1.type === 'B')) {
+                            if (Math.random() < kf) {
+                                // Random assignment of which particle becomes C and which becomes D
+                                if (Math.random() > 0.5) {
+                                    p1.type = 'C';
+                                    p2.type = 'D';
+                                } else {
+                                    p1.type = 'D';
+                                    p2.type = 'C';
+                                }
+                            }
+                        }
+                        
+                        // Reaction C + D -> A + B
+                        if ((isC && isD) || (p2.type === 'C' && p1.type === 'D')) {
+                            if (Math.random() < kr) {
+                                // Random assignment of which particle becomes A and which becomes B
+                                if (Math.random() > 0.5) {
+                                    p1.type = 'A';
+                                    p2.type = 'B';
+                                } else {
+                                    p1.type = 'B';
+                                    p2.type = 'A';
+                                }
+                            }
+                        }
+                    }
+                }
+                p1.draw();
+            }
+
+            updateCounts();
+            drawChart();
+
+            if (isRunning) {
+                animationFrameId = requestAnimationFrame(animate);
+            }
+        }
+
+        // Event listener for the start button
+        startButton.addEventListener('click', () => {
+            if (isRunning) {
+                cancelAnimationFrame(animationFrameId);
+                isRunning = false;
+                startButton.textContent = 'Simulation starten';
+            } else {
+                initializeParticles();
+                isRunning = true;
+                startButton.textContent = 'Simulation stoppen';
+                animate();
+            }
+        });
+
+        // Create initial particles on page load
+        window.onload = () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            chartCanvas.width = chartCanvas.offsetWidth;
+            chartCanvas.height = chartCanvas.offsetHeight;
+            initializeParticles();
+            updateCounts();
+            drawChart();
+        };
+
+        // Resize listener to adapt canvas
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            chartCanvas.width = chartCanvas.offsetWidth;
+            chartCanvas.height = chartCanvas.offsetHeight;
+            drawChart();
+        });
+
+    </script>
+</body>
+</html>
