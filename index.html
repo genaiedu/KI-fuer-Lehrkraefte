@@ -13,14 +13,33 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Lucide Icons Library -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="ls/lucide.min.js"></script>
   
   <style>
+    /* =========================================================================
+       LOKALE SCHRIFTEN EINBINDEN
+       Bitte die exakten Dateinamen anpassen, falls der Webfonts-Helper 
+       dir andere Namen (z.B. inter-v13-latin-regular.woff2) gegeben hat!
+       ========================================================================= */
+
+    /* --- CAVEAT (Handschrift) --- */
+    @font-face { font-family: 'Caveat'; src: url('fonts/caveat-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Caveat'; src: url('fonts/caveat-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Caveat'; src: url('fonts/caveat-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    /* --- INTER (Fließtext) --- */
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+
+    /* --- POPPINS (Überschriften) --- */
+    @font-face { font-family: 'Poppins'; src: url('fonts/poppins-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Poppins'; src: url('fonts/poppins-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Poppins'; src: url('fonts/poppins-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Poppins'; src: url('fonts/poppins-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+
+    /* ========================================================================= */
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -386,13 +405,6 @@
     .study-card .link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; transition: transform 0.2s; }
     .study-card .link:hover { transform: translateX(4px); }
 
-    /* Forum */
-    .forum-card { background: var(--card-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 3rem; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
-    .forum-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--accent-gradient); }
-    .forum-bg-img { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); height: 90%; opacity: 0.15; z-index: 0; pointer-events: none; }
-    body.dark .forum-bg-img { opacity: 0.05; filter: invert(1); }
-    .forum-content { position: relative; z-index: 1; }
-
     /* Impressum */
     .impressum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     .impressum-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 2rem; box-shadow: var(--glass-shadow); }
@@ -435,16 +447,13 @@
       .section-nav { padding: 0 1.5rem; }
       .study-card { grid-template-columns: 1fr; gap: 1rem; }
       .study-year { justify-self: start; }
-      .forum-card { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Progress Bar -->
   <div class="progress-bar" id="progress-bar"></div>
 
-  <!-- Animated background blobs -->
   <div class="bg-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -463,7 +472,6 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <img src="images/favicon.png" alt="GEN AI EDU" style="width:2.2rem; height:2.2rem; object-fit:contain; margin-bottom:0.6rem; border-radius:6px; position:relative; z-index:1;">
@@ -477,7 +485,6 @@
       <a href="#studien"><i data-lucide="book-open" class="nav-icon c-blue"></i> Aktuelle Forschung</a>
       <a href="#tools"><i data-lucide="wrench" class="nav-icon c-purple"></i> KI-Werkzeuge</a>
       <a href="#simulationen"><i data-lucide="laptop" class="nav-icon c-green"></i> Simulationen</a>
-      <a href="#forum"><i data-lucide="message-square" class="nav-icon c-red"></i> Forum</a>
       
       <div class="nav-label" style="margin-top: 1rem;">Rechtliches</div>
       <a href="#impressum"><i data-lucide="shield" class="nav-icon c-muted"></i> Impressum</a>
@@ -495,7 +502,7 @@
         <div class="hero-text">
           <div class="hero-breadcrumb">Praktisch · Fundiert · Erprobt</div>
           <h1 class="hero-title">KI im Unterricht<br><em>was wirklich funktioniert.</em></h1>
-          <p class="hero-subtitle">Konkrete Tipps für den Einsatz von KI-Werkzeugen, Hinweise auf aktuelle Forschung und ein Forum für den kollegialen Austausch. Kein Hype – sondern fundierte Praxis.</p>
+          <p class="hero-subtitle">Konkrete Tipps für den Einsatz von KI-Werkzeugen, Hinweise auf aktuelle Forschung und ein Portal für den kollegialen Austausch. Kein Hype – sondern fundierte Praxis.</p>
         </div>
         <div class="hero-image">
           <img src="images/logo-hero.png" alt="GEN AI EDU" />
@@ -509,12 +516,10 @@
       <a href="#studien"><i data-lucide="book-open" class="nav-icon c-blue"></i> Studien</a>
       <a href="#tools"><i data-lucide="wrench" class="nav-icon c-purple"></i> Tools</a>
       <a href="#simulationen"><i data-lucide="laptop" class="nav-icon c-green"></i> Apps</a>
-      <a href="#forum"><i data-lucide="message-square" class="nav-icon c-red"></i> Forum</a>
     </nav>
 
     <div class="content">
 
-      <!-- ═══ TIPPS ═══ -->
       <section class="section" id="tipps">
         <div class="section-header">
           <span class="section-num">01 —</span>
@@ -524,7 +529,6 @@
         
         <div class="format-grid">
           
-          <!-- TIPP 01 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-blue c-blue"><i data-lucide="users"></i></div>
@@ -549,7 +553,6 @@
             </div>
           </div>
 
-          <!-- TIPP 02 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-amber c-amber"><i data-lucide="terminal"></i></div>
@@ -574,7 +577,6 @@
             </div>
           </div>
 
-          <!-- TIPP 03 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-red c-red"><i data-lucide="search"></i></div>
@@ -599,7 +601,6 @@
             </div>
           </div>
 
-          <!-- TIPP 04 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-purple c-purple"><i data-lucide="scale"></i></div>
@@ -625,7 +626,6 @@
             </div>
           </div>
 
-          <!-- TIPP 05 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-green c-green"><i data-lucide="git-merge"></i></div>
@@ -651,7 +651,6 @@
             </div>
           </div>
 
-          <!-- TIPP 06 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-blue c-blue"><i data-lucide="line-chart"></i></div>
@@ -677,7 +676,6 @@
             </div>
           </div>
 
-          <!-- TIPP 07 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-pink c-pink"><i data-lucide="alert-triangle"></i></div>
@@ -703,7 +701,6 @@
             </div>
           </div>
 
-          <!-- TIPP 08 -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-amber c-amber"><i data-lucide="clock"></i></div>
@@ -732,7 +729,6 @@
         </div>
       </section>
 
-      <!-- ═══ MATERIALIEN ═══ -->
       <section class="section" id="materialien">
         <div class="section-header reveal">
           <span class="section-num">02 —</span>
@@ -803,7 +799,6 @@
         </div>
       </section>
 
-      <!-- ═══ STUDIEN ═══ -->
       <section class="section" id="studien">
         <div class="section-header reveal">
           <span class="section-num">03 —</span>
@@ -874,7 +869,6 @@
         </div>
       </section>
 
-      <!-- ═══ TOOLS ═══ -->
       <section class="section" id="tools">
         <div class="section-header reveal">
           <span class="section-num">04 —</span>
@@ -882,7 +876,6 @@
         </div>
         <div class="format-grid">
 
-          <!-- Gemini -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-blue"><img src="images/gemini-logo.png" alt="Gemini" class="tool-logo-square"></div>
@@ -902,7 +895,6 @@
             </div>
           </div>
 
-          <!-- Claude -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-amber"><img src="images/claude-logo.png" alt="Claude by Anthropic" class="tool-logo-square"></div>
@@ -922,7 +914,6 @@
             </div>
           </div>
 
-          <!-- ChatGPT -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-green"><img src="images/ChatGPT_logo.svg" alt="ChatGPT" class="tool-logo-square"></div>
@@ -942,7 +933,6 @@
             </div>
           </div>
 
-          <!-- NotebookLM -->
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-purple"><img src="images/notebook-logo.svg" alt="NotebookLM" class="tool-logo-square"></div>
@@ -965,7 +955,6 @@
         </div>
       </section>
 
-      <!-- ═══ SIMULATIONEN ═══ -->
       <section class="section" id="simulationen">
         <div class="section-header reveal">
           <span class="section-num">05 —</span>
@@ -1030,33 +1019,9 @@
         </div>
       </section>
 
-      <!-- ═══ FORUM ═══ -->
-      <section class="section" id="forum">
-        <div class="section-header reveal">
-          <span class="section-num">06 —</span>
-          <h2 class="section-title">Forum &amp; Diskussion</h2>
-        </div>
-        <div class="forum-card reveal">
-          <img src="images/denker.png" alt="Denker" class="forum-bg-img">
-          <div class="forum-content">
-            <p class="lead-text">Erfahrungen austauschen, Fragen stellen, Materialien teilen – hier ist Raum dafür.</p>
-            
-            <!-- CUSDIS INTEGRATION -->
-            <div id="cusdis_thread"
-              data-host="https://cusdis.com"
-              data-app-id="ec1063ef-1d72-4d71-a724-5718b0b72909"
-              data-page-id="ki-im-unterricht-hauptseite"
-              data-page-url="https://genaiedu.github.io/KI-fuer-Lehrkraefte/"
-              data-page-title="KI im Unterricht – Praktisch. Fundiert. Erprobt."
-            ></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ IMPRESSUM ═══ -->
       <section class="section" id="impressum">
         <div class="section-header reveal">
-          <span class="section-num">07 —</span>
+          <span class="section-num">06 —</span>
           <h2 class="section-title">Rechtliches</h2>
         </div>
         
@@ -1083,10 +1048,8 @@
               Dr. Claus Unterberg (siehe Impressum)<br><br>
               <strong>Hosting</strong><br>
               Diese Seite wird über GitHub Pages gehostet. GitHub kann beim Aufruf technische Daten verarbeiten. Weitere Infos: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.<br><br>
-              <strong>Kommentarfunktion (Cusdis)</strong><br>
-              Das Forum nutzt Cusdis.com. Beim Abgeben eines Kommentars werden Name, optionale E-Mail und Text an Cusdis übermittelt. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO.<br><br>
               <strong>Keine Cookies, kein Tracking</strong><br>
-              Diese Seite setzt selbst keine Cookies und verwendet kein Analytics.
+              Diese Seite setzt selbst keine Cookies und verwendet keine Analyse-Tools. Eine Datenweitergabe an Dritte (wie Google Fonts oder externe Skripte) findet nicht statt.
             </p>
           </div>
         </div>
@@ -1108,10 +1071,6 @@
     <i data-lucide="arrow-up"></i>
   </a>
 
-  <!-- Scripts -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
-  
   <script>
     // Initialize Lucide Icons
     lucide.createIcons();
