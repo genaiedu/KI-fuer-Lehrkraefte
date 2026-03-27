@@ -956,25 +956,47 @@
       </section>
 
     <section class="section" id="simulationen">
-        <div class="section-header reveal">
-          <span class="section-num">05 —</span>
-          <h2 class="section-title">Interaktive Simulationen</h2>
-        </div>
-        
-        <p class="lead-text reveal">Interaktive Simulationen und kleine Lern-Apps lassen sich heute ohne Programmierkenntnisse erstellen – direkt im Chat mit Claude oder Gemini. Das Ergebnis ist stets eine einzelne HTML-Datei, die sofort im Browser läuft.</p>
-        
-        <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 2rem 0; font-size: 0.95rem;" class="reveal">
-          <p style="margin-bottom: 0.75rem;"><strong><i data-lucide="lock" style="vertical-align: middle; margin-right: 5px;"></i> Zugang & Passwort:</strong> 
-            Einige der hier verlinkten Simulationen sind durch ein Passwort geschützt, um den Zugriff auf den schulischen Kontext zu beschränken. Bitte nutzen Sie das einfache Passwort "Zugang", um die Apps zu öffnen.
-          </p>
-          <p><strong><i data-lucide="shield-check" style="vertical-align: middle; margin-right: 5px;"></i> Datenschutz-Hinweis:</strong> 
-            Um die Privatsphäre der Lernenden zu schützen, sind diese Apps so konzipiert, dass sie <u>lokal</u> funktionieren. Im Gegensatz zu Standard-Lösungen werden keine Schriften (wie Google Fonts) oder Skripte von externen Servern nachgeladen. Damit wird verhindert, dass IP-Adressen ungefragt an Drittanbieter (z.B. in die USA) übertragen werden.
-          </p>
-        </div>
+  <div class="section-header reveal">
+    <span class="section-num">05 —</span>
+    <h2 class="section-title">Interaktive Simulationen</h2>
+  </div>
+  
+  <p class="lead-text reveal">
+    Interaktive Simulationen und kleine Lern-Apps lassen sich heute ohne Programmierkenntnisse erstellen – direkt im Chat mit Claude oder Gemini. 
+    Das Ergebnis ist stets eine einzelne HTML-Datei, die sofort im Browser läuft.
+  </p>
+  
+  <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 2rem 0; font-size: 0.95rem;" class="reveal">
+    <p style="margin-bottom: 1rem;">
+      <strong><i data-lucide="lock" style="vertical-align: middle; margin-right: 5px;"></i> Zugang & Passwort:</strong><br>
+      Einige der hier verlinkten Simulationen sind passwortgeschützt. Das Passwort zum Öffnen lautet: <code style="background: var(--glass-bg); padding: 2px 6px; border-radius: 4px; font-weight: 800; color: var(--accent);">Zugang</code>
+    </p>
+    
+    <p style="margin-bottom: 1rem;">
+      <strong><i data-lucide="eye-off" style="vertical-align: middle; margin-right: 5px;"></i> Datenschutz-Transparenz:</strong><br>
+      Bitte beachten Sie, dass beim Ausführen dieser Simulationen technisch bedingt Daten (wie Ihre IP-Adresse) an externe Server (z. B. Google Fonts) übertragen werden können. 
+    </p>
 
-        <p class="body-text reveal">Fertige Apps lassen sich kostenlos über <strong>GitHub Pages</strong> veröffentlichen – als direkter Link, den Schülerinnen und Schüler auf jedem Gerät aufrufen können. Der Ablauf in Kurzform: Konto erstellen → neues Repository anlegen → HTML-Datei hochladen → unter <em>Settings → Pages</em> den Branch aktivieren → fertig.</p>
+    <div style="background: var(--glass-bg); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);">
+      <p style="margin-bottom: 0.5rem;"><strong><i data-lucide="shield-check" style="vertical-align: middle; margin-right: 5px;"></i> Lösung: Verschlüsselung mit StatiCrypt</strong></p>
+      <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim);">
+        Es ist immer sinnvoll, interaktive Programme mit Werkzeugen wie <strong>StatiCrypt</strong> zu verschlüsseln. Das Tool versieht Ihre HTML-Datei mit einer AES-256-Verschlüsselung. Nur wer das Passwort kennt, kann die Datei im Browser entschlüsseln. Da die Entschlüsselung rein lokal im Browser stattfindet, ist dies ein erheblicher Sicherheitsgewinn.
+      </p>
+      <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-top: 1rem; color: var(--text-muted);">Kurzanleitung:</h4>
+      <ul style="font-size: 0.85rem; margin-left: 1.2rem; margin-top: 0.4rem; color: var(--text-dim);">
+        <li>Besuchen Sie die StatiCrypt-Webseite.</li>
+        <li>Laden Sie Ihre HTML-Datei hoch und vergeben Sie ein Passwort.</li>
+        <li>Laden Sie die verschlüsselte Datei herunter und laden Sie diese bei GitHub hoch.</li>
+      </ul>
+    </div>
+  </div>
 
-        <div class="download-grid" style="margin-top: 2rem;">
+  <p class="body-text reveal">
+    Fertige Apps lassen sich kostenlos über <strong>GitHub Pages</strong> veröffentlichen – als direkter Link, den Schülerinnen und Schüler auf jedem Gerät aufrufen können. 
+    Der Ablauf in Kurzform: Konto erstellen → neues Repository anlegen → HTML-Datei hochladen → unter <em>Settings → Pages</em> den Branch aktivieren → fertig.
+  </p>
+
+  <div class="download-grid" style="margin-top: 2rem;">
 
           <a class="download-card reveal" href="sims/weltbild.html" target="_blank" rel="noopener">
             <div class="card-top">
