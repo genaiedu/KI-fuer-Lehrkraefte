@@ -19,13 +19,13 @@
     /* =========================================================================
        LOKALE SCHRIFTEN EINBINDEN
        Bitte die exakten Dateinamen anpassen, falls der Webfonts-Helper 
-       dir andere Namen (z.B. inter-v13-latin-regular.woff2) gegeben hat!
+       dir andere Namen gegeben hat!
        ========================================================================= */
 
-    /* --- CAVEAT (Handschrift) --- */
-    @font-face { font-family: 'Caveat'; src: url('Fonts/caveat-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Caveat'; src: url('Fonts/caveat-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Caveat'; src: url('Fonts/caveat-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    /* --- DANCING SCRIPT (Handschrift) --- */
+    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 
     /* --- INTER (Fließtext) --- */
     @font-face { font-family: 'Inter'; src: url('Fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -56,7 +56,7 @@
       --c-green: #059669;
       --c-purple: #8b5cf6;
       --c-pink: #ec4899;
-      --c-red: #ef4444; /* Spezifisches Rot für bunte Icons */
+      --c-red: #ef4444;
 
       /* Changierender Hintergrund (Eisblau <-> Schieferweiß) */
       --bg-color: #f8fafc;
@@ -68,7 +68,7 @@
       --glass-bg: rgba(255, 255, 255, 0.65);
       --glass-border: rgba(255, 255, 255, 0.9);
       --glass-shadow: 0 10px 40px rgba(15, 23, 42, 0.05); 
-      --glass-hover: 0 15px 45px rgba(26, 111, 181, 0.12); /* Blauer Schimmer bei Hover */
+      --glass-hover: 0 15px 45px rgba(26, 111, 181, 0.12);
       
       --text-main: #0f172a;
       --text-dim: #334155;
@@ -95,7 +95,7 @@
       --radius-sm: 16px;
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-display: 'Poppins', system-ui, sans-serif;
-      --font-hand: 'Caveat', cursive;
+      --font-hand: 'Dancing Script', cursive; /* Hier die neue Variable für die Handschrift */
     }
 
     body.dark {
@@ -327,7 +327,18 @@
     .hero-text { flex: 1; min-width: 300px; }
     .hero-breadcrumb { font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 1.25rem; letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase; }
     .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 900; margin-bottom: 1.25rem; text-shadow: 0 4px 20px rgba(0,0,0,0.2); letter-spacing: -0.02em; }
-    .hero-title em { font-family: var(--font-hand); font-weight: 700; color: #fff; opacity: 0.9; padding-left: 10px; }
+    
+    /* NEUE REGELN FÜR DIE HANDSCHRIFT (Dancing Script) */
+    .hero-title em { 
+      font-family: var(--font-hand); 
+      font-weight: 700; 
+      font-style: normal; /* Dancing Script ist von Haus aus kursiv */
+      color: #fff; 
+      opacity: 0.95; 
+      padding-left: 10px; 
+      font-size: 1.1em; /* Macht die Handschrift etwas präsenter */
+    }
+
     .hero-subtitle { font-size: 1.15rem; font-weight: 400; opacity: 0.9; margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
     .hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .hero-meta span { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
@@ -439,6 +450,16 @@
       .main.expanded { margin-left: 0; }
       .hero { padding: 7rem 2rem 4rem; }
       .hero-content { gap: 2rem; justify-content: center; text-align: center; }
+      
+      /* Angepasster Umbruch für die Handschrift auf dem Handy */
+      .hero-title em { 
+        display: block; 
+        padding-left: 0; 
+        margin-top: 10px; 
+        font-size: 1.15em; 
+        line-height: 1.2; 
+      }
+
       .hero-meta { justify-content: center; }
       .hero-image img { width: 220px; }
       .content { padding: 0 1.5rem 3rem; }
