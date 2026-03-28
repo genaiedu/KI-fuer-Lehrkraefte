@@ -17,27 +17,69 @@
   
   <style>
     /* =========================================================================
-       LOKALE SCHRIFTEN EINBINDEN
-       Bitte die exakten Dateinamen anpassen, falls der Webfonts-Helper 
-       dir andere Namen gegeben hat!
-       ========================================================================= */
+   LOKALE SCHRIFTEN EINBINDEN (Exakte Dateinamen für GitHub)
+   ========================================================================= */
 
-    /* --- DANCING SCRIPT (Handschrift) --- */
-    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Dancing Script'; src: url('Fonts/dancing-script-v24-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+/* --- DANCING SCRIPT (Handschrift) --- */
+@font-face { 
+  font-family: 'Dancing Script'; 
+  src: url('Fonts/dancing-script-v29-latin-regular.woff2') format('woff2'); 
+  font-weight: 400; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Dancing Script'; 
+  src: url('Fonts/dancing-script-v29-latin-600.woff2') format('woff2'); 
+  font-weight: 600; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Dancing Script'; 
+  src: url('Fonts/dancing-script-v29-latin-700.woff2') format('woff2'); 
+  font-weight: 700; font-style: normal; font-display: swap; 
+}
 
-    /* --- INTER (Fließtext) --- */
-    @font-face { font-family: 'Inter'; src: url('Fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Inter'; src: url('Fonts/inter-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Inter'; src: url('Fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+/* --- INTER (Fließtext) --- */
+@font-face { 
+  font-family: 'Inter'; 
+  src: url('Fonts/inter-v20-latin-regular.woff2') format('woff2'); 
+  font-weight: 400; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Inter'; 
+  src: url('Fonts/inter-v20-latin-500.woff2') format('woff2'); 
+  font-weight: 500; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Inter'; 
+  src: url('Fonts/inter-v20-latin-600.woff2') format('woff2'); 
+  font-weight: 600; font-style: normal; font-display: swap; 
+}
 
-    /* --- POPPINS (Überschriften) --- */
-    @font-face { font-family: 'Poppins'; src: url('Fonts/poppins-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Poppins'; src: url('Fonts/poppins-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Poppins'; src: url('Fonts/poppins-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Poppins'; src: url('Fonts/poppins-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
-
+/* --- POPPINS (Überschriften) --- */
+@font-face { 
+  font-family: 'Poppins'; 
+  src: url('Fonts/poppins-v24-latin-regular.woff2') format('woff2'); 
+  font-weight: 400; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Poppins'; 
+  src: url('Fonts/poppins-v24-latin-600.woff2') format('woff2'); 
+  font-weight: 600; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Poppins'; 
+  src: url('Fonts/poppins-v24-latin-700.woff2') format('woff2'); 
+  font-weight: 700; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Poppins'; 
+  src: url('Fonts/poppins-v24-latin-800.woff2') format('woff2'); 
+  font-weight: 800; font-style: normal; font-display: swap; 
+}
+@font-face { 
+  font-family: 'Poppins'; 
+  src: url('Fonts/poppins-v24-latin-900.woff2') format('woff2'); 
+  font-weight: 900; font-style: normal; font-display: swap; 
+}
     /* ========================================================================= */
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -93,9 +135,10 @@
       --sidebar-width: 320px;
       --radius: 24px;
       --radius-sm: 16px;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-display: 'Poppins', system-ui, sans-serif;
-      --font-hand: 'Dancing Script', cursive; /* Hier die neue Variable für die Handschrift */
+
+      --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-hand: 'Dancing Script', cursive;
     }
 
     body.dark {
@@ -330,14 +373,12 @@
     
     /* NEUE REGELN FÜR DIE HANDSCHRIFT (Dancing Script) */
     .hero-title em { 
-      font-family: var(--font-hand); 
-      font-weight: 700; 
-      font-style: normal; /* Dancing Script ist von Haus aus kursiv */
-      color: #fff; 
-      opacity: 0.95; 
-      padding-left: 10px; 
-      font-size: 1.1em; /* Macht die Handschrift etwas präsenter */
-    }
+  font-family: var(--font-hand); 
+  font-weight: 400; /* Dancing Script wirkt bei 400 am authentischsten */
+  font-size: 1.15em; /* Etwas größer machen, da die Schrift zierlich ist */
+  display: inline-block;
+  transform: rotate(-2deg); /* Ein leichter Schwung lässt es wie echt geschrieben wirken */
+}
 
     .hero-subtitle { font-size: 1.15rem; font-weight: 400; opacity: 0.9; margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
     .hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
