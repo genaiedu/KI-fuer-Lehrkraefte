@@ -20,7 +20,6 @@
    LOKALE SCHRIFTEN EINBINDEN (Exakte Dateinamen für GitHub)
    ========================================================================= */
 
-/* --- DANCING SCRIPT (Handschrift) --- */
 @font-face { 
   font-family: 'Dancing Script'; 
   src: url('Fonts/dancing-script-v29-latin-regular.woff2') format('woff2'); 
@@ -37,7 +36,6 @@
   font-weight: 700; font-style: normal; font-display: swap; 
 }
 
-/* --- INTER (Fließtext) --- */
 @font-face { 
   font-family: 'Inter'; 
   src: url('Fonts/inter-v20-latin-regular.woff2') format('woff2'); 
@@ -54,7 +52,6 @@
   font-weight: 600; font-style: normal; font-display: swap; 
 }
 
-/* --- POPPINS (Überschriften) --- */
 @font-face { 
   font-family: 'Poppins'; 
   src: url('Fonts/poppins-v24-latin-regular.woff2') format('woff2'); 
@@ -80,19 +77,16 @@
   src: url('Fonts/poppins-v24-latin-900.woff2') format('woff2'); 
   font-weight: 900; font-style: normal; font-display: swap; 
 }
-    /* ========================================================================= */
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Das Theme-Blau als primärer Anker */
       --theme-blue: #1a6fb5;
       --accent: var(--theme-blue);
       --accent-soft: color-mix(in srgb, var(--theme-blue) 12%, transparent);
       --accent-glow: color-mix(in srgb, var(--theme-blue) 30%, transparent);
       --accent-gradient: linear-gradient(135deg, #0a4a80, #1a6fb5);
       
-      /* Farbtupfer-Palette (Light Mode) */
       --c-blue: #0ea5e9;
       --c-amber: #d97706;
       --c-green: #059669;
@@ -100,7 +94,6 @@
       --c-pink: #ec4899;
       --c-red: #ef4444;
 
-      /* Changierender Hintergrund (Eisblau <-> Schieferweiß) */
       --bg-color: #f8fafc;
       --bg-grad-1: #f0f9ff; 
       --bg-grad-2: #e0f2fe; 
@@ -127,7 +120,6 @@
       --table-hover: var(--accent-soft);
       --modal-bg: rgba(255, 255, 255, 0.98);
       
-      /* Hintergrund-Blobs */
       --grad-1: rgba(26, 111, 181, 0.12);   
       --grad-2: rgba(14, 165, 233, 0.18);  
       --grad-3: rgba(139, 92, 246, 0.12);  
@@ -137,19 +129,17 @@
       --radius-sm: 16px;
 
       --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Poppins', system-ui, sans-serif;
-  --font-hand: 'Dancing Script', cursive;
+      --font-display: 'Poppins', system-ui, sans-serif;
+      --font-hand: 'Dancing Script', cursive;
     }
 
     body.dark {
-      /* Optimiertes Blau für den Dunkelmodus */
       --theme-blue: #38bdf8; 
       --accent: var(--theme-blue);
       --accent-soft: color-mix(in srgb, var(--theme-blue) 15%, transparent);
       --accent-glow: color-mix(in srgb, var(--theme-blue) 35%, transparent);
       --accent-gradient: linear-gradient(135deg, #0284c7, #38bdf8);
       
-      /* Farbtupfer-Palette (Dark Mode) */
       --c-blue: #7dd3fc;
       --c-amber: #fbbf24;
       --c-green: #34d399;
@@ -157,7 +147,6 @@
       --c-pink: #f472b6;
       --c-red: #f87171;
 
-      /* Dunkler changierender Hintergrund (Nachtblau) */
       --bg-color: #020617;
       --bg-grad-1: #081627; 
       --bg-grad-2: #041222; 
@@ -182,7 +171,6 @@
       --card-border: rgba(255, 255, 255, 0.08);
       --modal-bg: rgba(15, 23, 42, 0.98);
       
-      /* Hintergrund-Blobs Dark Mode */
       --grad-1: rgba(56, 189, 248, 0.20);   
       --grad-2: rgba(14, 165, 233, 0.20);  
       --grad-3: rgba(167, 139, 250, 0.15);  
@@ -190,7 +178,6 @@
 
     html { scroll-behavior: smooth; font-size: 16px; }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
     ::-webkit-scrollbar-thumb { background: var(--accent-soft); border-radius: 10px; border: 2px solid var(--bg-color); }
@@ -266,7 +253,6 @@
       animation: drift3 32s ease-in-out infinite;
     }
 
-    /* Helper Classes */
     .c-blue { color: var(--c-blue) !important; }
     .c-amber { color: var(--c-amber) !important; }
     .c-green { color: var(--c-green) !important; }
@@ -284,7 +270,6 @@
     .lucide { width: 1.25em; height: 1.25em; stroke-width: 2.2; }
     .nav-icon { width: 1.1em; height: 1.1em; flex-shrink: 0; }
 
-    /* Progress Bar */
     .progress-bar {
       position: fixed; top: 0; left: 0; height: 4px; width: 0%;
       background: var(--accent-gradient);
@@ -293,7 +278,6 @@
       box-shadow: 0 0 10px var(--accent-glow);
     }
 
-    /* Controls */
     .controls {
       position: fixed; top: 24px; left: 24px; z-index: 1100;
       display: flex; gap: 12px;
@@ -314,7 +298,6 @@
     body.dark #themeToggle .sun { display: block; }
     body.dark #themeToggle .moon { display: none; }
 
-    /* Sidebar */
     .sidebar {
       position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh;
       background: var(--sidebar-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
@@ -340,11 +323,9 @@
     .overlay { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 990; transition: all 0.3s ease; }
     .overlay.active { visibility: visible; opacity: 1; }
 
-    /* Main Content */
     .main { margin-left: var(--sidebar-width); min-height: 100vh; position: relative; z-index: 1; transition: margin-left 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .main.expanded { margin-left: 0; }
 
-    /* Hero Section */
     .hero { 
       background: var(--hero-bg); 
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -371,14 +352,13 @@
     .hero-breadcrumb { font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 1.25rem; letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase; }
     .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 900; margin-bottom: 1.25rem; text-shadow: 0 4px 20px rgba(0,0,0,0.2); letter-spacing: -0.02em; }
     
-    /* NEUE REGELN FÜR DIE HANDSCHRIFT (Dancing Script) */
     .hero-title em { 
-  font-family: var(--font-hand); 
-  font-weight: 400; /* Dancing Script wirkt bei 400 am authentischsten */
-  font-size: 1.15em; /* Etwas größer machen, da die Schrift zierlich ist */
-  display: inline-block;
-  transform: rotate(-2deg); /* Ein leichter Schwung lässt es wie echt geschrieben wirken */
-}
+      font-family: var(--font-hand); 
+      font-weight: 400;
+      font-size: 1.15em;
+      display: inline-block;
+      transform: rotate(-2deg);
+    }
 
     .hero-subtitle { font-size: 1.15rem; font-weight: 400; opacity: 0.9; margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
     .hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -386,21 +366,18 @@
     .hero-image { flex-shrink: 0; }
     .hero-image img { width: 280px; opacity: 0.95; border-radius: 24px; filter: drop-shadow(0 15px 35px rgba(0,0,0,0.25)); border: 1px solid rgba(255,255,255,0.2); }
 
-    /* Section Nav Sticky */
     .section-nav { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); padding: 0 3rem; position: sticky; top: 0; z-index: 50; overflow-x: auto; white-space: nowrap; display: flex; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
     .section-nav a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1.1rem 1.25rem; color: var(--text-muted); text-decoration: none; font-size: 0.86rem; font-weight: 700; border-bottom: 3px solid transparent; transition: all 0.2s; }
     .section-nav a:hover, .section-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
     .content { max-width: 1000px; margin: 0 auto; padding: 0 3rem 5rem; }
 
-    /* Sections */
     .section { margin-top: 3.5rem; padding-top: 1rem; }
     .section-header { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.5rem; }
     .section-num { font-size: 0.8rem; font-weight: 800; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; background: var(--accent-soft); padding: 0.3rem 0.8rem; border-radius: 50px; border: 1px solid var(--accent-glow); }
     .section-title { font-family: var(--font-display); font-size: 2.2rem; color: var(--text-main); line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; }
     .section-intro { font-size: 1.05rem; color: var(--text-dim); margin-bottom: 2rem; line-height: 1.7; font-weight: 500; }
 
-    /* Format Grid (Tipps & Tools Accordion) */
     .format-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
     .format-card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: var(--radius-sm); box-shadow: var(--glass-shadow); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; cursor: pointer; }
     .format-card:hover { box-shadow: 0 15px 40px var(--accent-glow); border-color: var(--accent); transform: translateY(-3px); }
@@ -425,12 +402,10 @@
     .tip-refs a { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.4rem 0.8rem; background: var(--accent-soft); border-radius: 8px; border: 1px solid var(--accent-glow); transition: all 0.2s; align-self: flex-start; }
     .tip-refs a:hover { background: var(--accent); color: white; transform: translateX(4px); }
 
-    /* Tool Logos Specifics */
     .tool-logo { height: 26px; max-width: 100px; object-fit: contain; }
     .tool-logo-square { height: 32px; width: 32px; object-fit: contain; }
     body.dark .tool-logo, body.dark .tool-logo-square { filter: brightness(0.9); }
 
-    /* Download Cards (Materialien & Simulationen) */
     .download-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
     .download-card { display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
     .download-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent-gradient); opacity: 0; z-index: -1; transition: opacity 0.3s; }
@@ -446,7 +421,6 @@
     .download-card .action { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--accent); transition: all 0.3s; margin-top: auto; }
     .download-card:hover .action { transform: translateX(6px); }
 
-    /* Studies Grid */
     .studies-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
     .study-card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 1.5rem; box-shadow: var(--glass-shadow); display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; transition: transform 0.3s; }
     .study-card:hover { transform: translateY(-3px); box-shadow: var(--glass-hover); }
@@ -457,7 +431,26 @@
     .study-card .link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; transition: transform 0.2s; }
     .study-card .link:hover { transform: translateX(4px); }
 
-    /* Impressum */
+    .ethics-box {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+    }
+
+    .ethics-box p {
+      margin-bottom: 1rem;
+      color: var(--text-dim);
+      line-height: 1.75;
+      font-weight: 500;
+    }
+
+    .ethics-box p:last-child {
+      margin-bottom: 0;
+    }
+
     .impressum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     .impressum-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 2rem; box-shadow: var(--glass-shadow); }
     .impressum-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-bottom: 1rem; }
@@ -465,11 +458,36 @@
     .impressum-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
     .impressum-card a:hover { text-decoration: underline; }
 
-    /* Reveal Animation */
+    .footer {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer-subtitle,
+    .footer-ref {
+      font-size: 0.9rem;
+    }
+
+    .footer hr {
+      border: none;
+      border-top: 1px solid var(--glass-border);
+      margin: 1.5rem 0;
+    }
+
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* Back to Top */
     .back-to-top {
       position: fixed; bottom: 24px; right: 24px; z-index: 1100;
       background: var(--glass-bg); backdrop-filter: blur(20px);
@@ -482,7 +500,6 @@
     .back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .back-to-top:hover { background: var(--accent-gradient); color: white; border-color: transparent; box-shadow: 0 12px 30px var(--accent-glow); transform: translateY(-4px); }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
@@ -492,7 +509,6 @@
       .hero { padding: 7rem 2rem 4rem; }
       .hero-content { gap: 2rem; justify-content: center; text-align: center; }
       
-      /* Angepasster Umbruch für die Handschrift auf dem Handy */
       .hero-title em { 
         display: block; 
         padding-left: 0; 
@@ -546,6 +562,7 @@
       <a href="#materialien"><i data-lucide="folder-down" class="nav-icon c-pink"></i> Materialien</a>
       <a href="#studien"><i data-lucide="book-open" class="nav-icon c-blue"></i> Aktuelle Forschung</a>
       <a href="#tools"><i data-lucide="wrench" class="nav-icon c-purple"></i> KI-Werkzeuge</a>
+      <a href="#ki-ethik"><i data-lucide="scale" class="nav-icon c-red"></i> KI-Ethik</a>
       <a href="#simulationen"><i data-lucide="laptop" class="nav-icon c-green"></i> Simulationen</a>
       
       <div class="nav-label" style="margin-top: 1rem;">Rechtliches</div>
@@ -577,6 +594,7 @@
       <a href="#materialien"><i data-lucide="folder-down" class="nav-icon c-pink"></i> Material</a>
       <a href="#studien"><i data-lucide="book-open" class="nav-icon c-blue"></i> Studien</a>
       <a href="#tools"><i data-lucide="wrench" class="nav-icon c-purple"></i> Tools</a>
+      <a href="#ki-ethik"><i data-lucide="scale" class="nav-icon c-red"></i> Ethik</a>
       <a href="#simulationen"><i data-lucide="laptop" class="nav-icon c-green"></i> Apps</a>
     </nav>
 
@@ -798,7 +816,6 @@
         </div>
         <div class="download-grid">
 
-
           <a class="download-card reveal" href="https://genaiedu.github.io/Webdesign-mit-gemini/" target="_blank" rel="noopener">
             <div class="card-top">
               <div class="icon bg-c-blue c-blue"><i data-lucide="monitor-smartphone"></i></div>
@@ -869,7 +886,7 @@
             <span class="action">Öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
           </a>
           
-<a class="download-card reveal" href="materialien/leitfaden_lokale_ki.pdf" target="_blank" rel="noopener">
+          <a class="download-card reveal" href="materialien/leitfaden_lokale_ki.pdf" target="_blank" rel="noopener">
             <div class="card-top">
               <div class="icon bg-c-green c-green"><i data-lucide="shield-check"></i></div>
               <span class="card-meta c-green">Leitfaden</span>
@@ -1038,48 +1055,102 @@
         </div>
       </section>
 
-    <section class="section" id="simulationen">
-  <div class="section-header reveal">
-    <span class="section-num">05 —</span>
-    <h2 class="section-title">Interaktive Simulationen</h2>
-  </div>
-  
-  <p class="lead-text reveal">
-    Interaktive Simulationen und kleine Lern-Apps lassen sich heute ohne Programmierkenntnisse erstellen – direkt im Chat mit Claude oder Gemini. 
-    Das Ergebnis ist stets eine einzelne HTML-Datei, die sofort im Browser läuft.
-  </p>
-  
-  <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 2rem 0; font-size: 0.95rem;" class="reveal">
-    <p style="margin-bottom: 1rem;">
-      <strong><i data-lucide="lock" style="vertical-align: middle; margin-right: 5px;"></i> Zugang & Passwort:</strong><br>
-      Einige der hier verlinkten Simulationen sind passwortgeschützt. Das Passwort zum Öffnen lautet: <code style="background: var(--glass-bg); padding: 2px 6px; border-radius: 4px; font-weight: 800; color: var(--accent);">Zugang</code>
-    </p>
-    
-    <p style="margin-bottom: 1rem;">
-      <strong><i data-lucide="eye-off" style="vertical-align: middle; margin-right: 5px;"></i> Datenschutz-Transparenz:</strong><br>
-      Bitte beachten Sie, dass beim Ausführen dieser Simulationen technisch bedingt Daten (wie Ihre IP-Adresse) an externe Server (z. B. Google Fonts) übertragen werden können. 
-    </p>
+      <section class="section" id="ki-ethik">
+        <div class="section-header reveal">
+          <span class="section-num">05 —</span>
+          <h2 class="section-title">KI-Ethik</h2>
+        </div>
 
-    <div style="background: var(--glass-bg); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);">
-      <p style="margin-bottom: 0.5rem;"><strong><i data-lucide="shield-check" style="vertical-align: middle; margin-right: 5px;"></i> Lösung: Verschlüsselung mit StatiCrypt</strong></p>
-      <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim);">
-        Es ist immer sinnvoll, interaktive Programme mit Werkzeugen wie <strong>StatiCrypt</strong> zu verschlüsseln. Das Tool versieht Ihre HTML-Datei mit einer AES-256-Verschlüsselung. Nur wer das Passwort kennt, kann die Datei im Browser entschlüsseln. Da die Entschlüsselung rein lokal im Browser stattfindet, ist dies ein erheblicher Sicherheitsgewinn.
-      </p>
-      <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-top: 1rem; color: var(--text-muted);">Kurzanleitung:</h4>
-      <ul style="font-size: 0.85rem; margin-left: 1.2rem; margin-top: 0.4rem; color: var(--text-dim);">
-        <li>Besuchen Sie die StatiCrypt-Webseite.</li>
-        <li>Laden Sie Ihre HTML-Datei hoch und vergeben Sie ein Passwort.</li>
-        <li>Laden Sie die verschlüsselte Datei herunter und laden Sie diese bei GitHub hoch.</li>
-      </ul>
-    </div>
-  </div>
+        <p class="section-intro reveal">
+          Künstliche Intelligenz ist nicht nur eine technische Entwicklung, sondern eine gesellschaftliche Machtfrage. Zwei sehr unterschiedliche Veröffentlichungen zeigen dies in bemerkenswerter Übereinstimmung: Rainer Mühlhoffs politisch-philosophische Analyse <em>Künstliche Intelligenz und der neue Faschismus</em> und die Enzyklika <em>Magnifica Humanitas</em> von Papst Leo XIV.
+        </p>
 
-  <p class="body-text reveal">
-    Fertige Apps lassen sich kostenlos über <strong>GitHub Pages</strong> veröffentlichen – als direkter Link, den Schülerinnen und Schüler auf jedem Gerät aufrufen können. 
-    Der Ablauf in Kurzform: Konto erstellen → neues Repository anlegen → HTML-Datei hochladen → unter <em>Settings → Pages</em> den Branch aktivieren → fertig.
-  </p>
+        <div class="download-grid">
 
-  <div class="download-grid" style="margin-top: 2rem;">
+          <a class="download-card reveal" href="https://www.amazon.de/K%C3%BCnstliche-Intelligenz-neue-Faschismus-Universal-Bibliothek/dp/3150146666/ref=sr_1_1?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=287GP679QCNU0&dib=eyJ2IjoiMSJ9.LjqpnK4ghlCAa5REvhDB3pGPnq983HAAZbhCtUYsVv8faH8-KtBiYrXYOHF4RwI68iZ2dkw71uapp-GgQLrYwmQlBtANTdSXVrWC0OU23VN54reW3D2i4PF7IeS4V-wKr204VO9f-0cHChivD3TwqfJd-_x3wxPKJuhOiBC7oVmIAiA_iDFMaSR_qytY-NuK4I8vNS18of8D8UmNzG1F3hZQvq0To0bB_QH8pVJ8w5o.5C-QcpBOBamr0A3crN_vl8Dc0k4o82Pqrzrv06HIMYA&dib_tag=se&keywords=ki+faschismus&qid=1779793682&sprefix=ki+faschismus%2Caps%2C119&sr=8-1" target="_blank" rel="noopener">
+            <div class="card-top">
+              <div class="icon bg-c-red c-red"><i data-lucide="alert-triangle"></i></div>
+              <span class="card-meta c-red">Politische Analyse</span>
+            </div>
+            <div class="title">Künstliche Intelligenz und der neue Faschismus</div>
+            <p class="desc">
+              Rainer Mühlhoff untersucht, wie KI-Debatten durch Erlösungsversprechen, AGI-Spekulationen und technokratische Zukunftsbilder von gegenwärtigen Problemen ablenken können: Machtkonzentration, Ausbeutung, Demokratiegefährdung und die politische Nähe bestimmter Tech-Milieus zu autoritären Ideologien.
+            </p>
+            <span class="action">Bei Amazon öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
+          </a>
+
+          <a class="download-card reveal" href="https://www.vatican.va/content/leo-xiv/de/encyclicals/documents/20260515-magnifica-humanitas.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <div class="icon bg-c-blue c-blue"><i data-lucide="landmark"></i></div>
+              <span class="card-meta c-blue">Enzyklika</span>
+            </div>
+            <div class="title">Magnifica Humanitas</div>
+            <p class="desc">
+              Die Enzyklika von Papst Leo XIV. betrachtet Künstliche Intelligenz im Horizont von Menschenwürde, Gemeinwohl und sozialer Gerechtigkeit. Daten, Algorithmen und Plattformen erscheinen darin nicht als neutrale Werkzeuge, sondern als Teil eines digitalen Ökosystems, das geschützt, gerecht gestaltet und vor Monopolisierung bewahrt werden muss.
+            </p>
+            <span class="action">Enzyklika öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
+          </a>
+
+        </div>
+
+        <div class="ethics-box reveal">
+          <p>
+            <strong><i data-lucide="link" style="vertical-align: middle; margin-right: 5px;"></i> Auffällige Übereinkunft:</strong><br>
+            Obwohl die beiden Veröffentlichungen aus sehr unterschiedlichen Denktraditionen stammen, berühren sie sich in zentralen Punkten. Beide wenden sich gegen eine naive Fortschrittserzählung, in der KI als fast automatisch heilbringende Technologie erscheint. Beide betonen, dass die entscheidende Frage nicht nur lautet, was KI technisch leisten kann, sondern wem sie nützt, wer sie kontrolliert und welche gesellschaftlichen Strukturen durch sie verstärkt werden.
+          </p>
+
+          <p>
+            Mühlhoff formuliert diese Kritik politisch: KI darf nicht zum Instrument privater Machtkonzentration oder autoritärer Steuerung werden. Die Enzyklika formuliert denselben Grundgedanken theologisch und sozialethisch: Technik muss dem Menschen dienen, insbesondere den Schwächeren, und darf nicht dem unmittelbaren Vorteil weniger untergeordnet werden.
+          </p>
+
+          <p>
+            Gerade für Schule und Unterricht ist diese Übereinstimmung wichtig. KI-Kompetenz bedeutet daher nicht nur, Werkzeuge bedienen zu können. Schülerinnen und Schüler sollten auch verstehen, dass KI immer in ökonomische, politische und moralische Zusammenhänge eingebettet ist. Eine verantwortliche Nutzung setzt kritische Distanz, demokratische Kontrolle und die Frage nach Menschenwürde und Gerechtigkeit voraus.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="simulationen">
+        <div class="section-header reveal">
+          <span class="section-num">06 —</span>
+          <h2 class="section-title">Interaktive Simulationen</h2>
+        </div>
+        
+        <p class="section-intro reveal">
+          Interaktive Simulationen und kleine Lern-Apps lassen sich heute ohne Programmierkenntnisse erstellen – direkt im Chat mit Claude oder Gemini. 
+          Das Ergebnis ist stets eine einzelne HTML-Datei, die sofort im Browser läuft.
+        </p>
+        
+        <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 2rem 0; font-size: 0.95rem;" class="reveal">
+          <p style="margin-bottom: 1rem;">
+            <strong><i data-lucide="lock" style="vertical-align: middle; margin-right: 5px;"></i> Zugang & Passwort:</strong><br>
+            Einige der hier verlinkten Simulationen sind passwortgeschützt. Das Passwort zum Öffnen lautet: <code style="background: var(--glass-bg); padding: 2px 6px; border-radius: 4px; font-weight: 800; color: var(--accent);">Zugang</code>
+          </p>
+          
+          <p style="margin-bottom: 1rem;">
+            <strong><i data-lucide="eye-off" style="vertical-align: middle; margin-right: 5px;"></i> Datenschutz-Transparenz:</strong><br>
+            Bitte beachten Sie, dass beim Ausführen dieser Simulationen technisch bedingt Daten (wie Ihre IP-Adresse) an externe Server (z. B. Google Fonts) übertragen werden können. 
+          </p>
+
+          <div style="background: var(--glass-bg); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);">
+            <p style="margin-bottom: 0.5rem;"><strong><i data-lucide="shield-check" style="vertical-align: middle; margin-right: 5px;"></i> Lösung: Verschlüsselung mit StatiCrypt</strong></p>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim);">
+              Es ist immer sinnvoll, interaktive Programme mit Werkzeugen wie <strong>StatiCrypt</strong> zu verschlüsseln. Das Tool versieht Ihre HTML-Datei mit einer AES-256-Verschlüsselung. Nur wer das Passwort kennt, kann die Datei im Browser entschlüsseln. Da die Entschlüsselung rein lokal im Browser stattfindet, ist dies ein erheblicher Sicherheitsgewinn.
+            </p>
+            <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-top: 1rem; color: var(--text-muted);">Kurzanleitung:</h4>
+            <ul style="font-size: 0.85rem; margin-left: 1.2rem; margin-top: 0.4rem; color: var(--text-dim);">
+              <li>Besuchen Sie die StatiCrypt-Webseite.</li>
+              <li>Laden Sie Ihre HTML-Datei hoch und vergeben Sie ein Passwort.</li>
+              <li>Laden Sie die verschlüsselte Datei herunter und laden Sie diese bei GitHub hoch.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="section-intro reveal">
+          Fertige Apps lassen sich kostenlos über <strong>GitHub Pages</strong> veröffentlichen – als direkter Link, den Schülerinnen und Schüler auf jedem Gerät aufrufen können. 
+          Der Ablauf in Kurzform: Konto erstellen → neues Repository anlegen → HTML-Datei hochladen → unter <em>Settings → Pages</em> den Branch aktivieren → fertig.
+        </p>
+
+        <div class="download-grid" style="margin-top: 2rem;">
 
           <a class="download-card reveal" href="sims/weltbild.html" target="_blank" rel="noopener">
             <div class="card-top">
@@ -1136,7 +1207,7 @@
 
       <section class="section" id="impressum">
         <div class="section-header reveal">
-          <span class="section-num">06 —</span>
+          <span class="section-num">07 —</span>
           <h2 class="section-title">Rechtliches</h2>
         </div>
         
@@ -1187,25 +1258,20 @@
   </a>
 
   <script>
-    // Initialize Lucide Icons
     lucide.createIcons();
 
-    // Theme Logic
     const themeBtn = document.getElementById('themeToggle');
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('dark');
       localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
     });
     
-    // Apply saved theme (Default is light if unset)
     if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark');
+      document.body.classList.add('dark');
     } else if (localStorage.getItem('theme') === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // Optionale OS-Präferenz
-        document.body.classList.add('dark');
+      document.body.classList.add('dark');
     }
 
-    // Sidebar Logic
     const sidebarBtn = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
@@ -1236,25 +1302,21 @@
       }
     });
 
-    // Format cards toggle (Accordion)
     function toggleFormat(card) {
       const body = card.querySelector('.format-card-body');
       const isOpen = card.classList.contains('open');
       
-      // Close all
       document.querySelectorAll('.format-card.open').forEach(c => {
         c.classList.remove('open');
         c.querySelector('.format-card-body').style.maxHeight = null;
       });
       
-      // Open clicked
       if (!isOpen) {
         card.classList.add('open');
         body.style.maxHeight = body.scrollHeight + 'px';
       }
     }
 
-    // Active nav & Progress Bar & Back to top
     const sections = document.querySelectorAll('.section');
     const sidebarLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
     const sectionNavLinks = document.querySelectorAll('.section-nav a[href^="#"]');
@@ -1262,24 +1324,21 @@
     const backToTopBtn = document.getElementById('back-to-top');
 
     function handleScroll() {
-      // 1. Progress Bar
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
       progressBar.style.width = scrolled + "%";
 
-      // 2. Back to Top Button
       if (winScroll > 500) {
         backToTopBtn.classList.add('visible');
       } else {
         backToTopBtn.classList.remove('visible');
       }
 
-      // 3. Active Nav Links
       let current = '';
       sections.forEach(s => { 
         if (window.scrollY >= s.offsetTop - 200) {
-            current = s.id; 
+          current = s.id; 
         }
       });
       
@@ -1288,14 +1347,12 @@
     }
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Init on load
+    handleScroll();
 
-    // Mobile Sidebar Link Clicks
     sidebarLinks.forEach(l => l.addEventListener('click', () => { 
-        if (window.innerWidth <= 900) toggleSidebar(); 
+      if (window.innerWidth <= 900) toggleSidebar(); 
     }));
 
-    // Intersection Observer for Reveal Animations
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -1308,17 +1365,15 @@
 
     revealElements.forEach(el => revealObserver.observe(el));
     
-    // Check elements already in viewport on load
     setTimeout(() => {
-        revealElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                el.classList.add('visible');
-                revealObserver.unobserve(el);
-            }
-        });
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.classList.add('visible');
+          revealObserver.unobserve(el);
+        }
+      });
     }, 100);
-
   </script>
 </body>
 </html>
