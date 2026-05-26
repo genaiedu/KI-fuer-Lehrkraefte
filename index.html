@@ -12,71 +12,74 @@
   <meta property="og:url" content="https://genaiedu.github.io/KI-fuer-Lehrkraefte/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  
+
   <script src="Ls/lucide.min.js"></script>
-  
+
   <style>
     /* =========================================================================
    LOKALE SCHRIFTEN EINBINDEN (Exakte Dateinamen für GitHub)
    ========================================================================= */
 
-@font-face { 
-  font-family: 'Dancing Script'; 
-  src: url('Fonts/dancing-script-v29-latin-regular.woff2') format('woff2'); 
-  font-weight: 400; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Dancing Script'; 
-  src: url('Fonts/dancing-script-v29-latin-600.woff2') format('woff2'); 
-  font-weight: 600; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Dancing Script'; 
-  src: url('Fonts/dancing-script-v29-latin-700.woff2') format('woff2'); 
-  font-weight: 700; font-style: normal; font-display: swap; 
-}
+    /* --- DANCING SCRIPT (Handschrift) --- */
+    @font-face { 
+      font-family: 'Dancing Script'; 
+      src: url('Fonts/dancing-script-v29-latin-regular.woff2') format('woff2'); 
+      font-weight: 400; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Dancing Script'; 
+      src: url('Fonts/dancing-script-v29-latin-600.woff2') format('woff2'); 
+      font-weight: 600; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Dancing Script'; 
+      src: url('Fonts/dancing-script-v29-latin-700.woff2') format('woff2'); 
+      font-weight: 700; font-style: normal; font-display: swap; 
+    }
 
-@font-face { 
-  font-family: 'Inter'; 
-  src: url('Fonts/inter-v20-latin-regular.woff2') format('woff2'); 
-  font-weight: 400; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Inter'; 
-  src: url('Fonts/inter-v20-latin-500.woff2') format('woff2'); 
-  font-weight: 500; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Inter'; 
-  src: url('Fonts/inter-v20-latin-600.woff2') format('woff2'); 
-  font-weight: 600; font-style: normal; font-display: swap; 
-}
+    /* --- INTER (Fließtext) --- */
+    @font-face { 
+      font-family: 'Inter'; 
+      src: url('Fonts/inter-v20-latin-regular.woff2') format('woff2'); 
+      font-weight: 400; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Inter'; 
+      src: url('Fonts/inter-v20-latin-500.woff2') format('woff2'); 
+      font-weight: 500; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Inter'; 
+      src: url('Fonts/inter-v20-latin-600.woff2') format('woff2'); 
+      font-weight: 600; font-style: normal; font-display: swap; 
+    }
 
-@font-face { 
-  font-family: 'Poppins'; 
-  src: url('Fonts/poppins-v24-latin-regular.woff2') format('woff2'); 
-  font-weight: 400; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Poppins'; 
-  src: url('Fonts/poppins-v24-latin-600.woff2') format('woff2'); 
-  font-weight: 600; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Poppins'; 
-  src: url('Fonts/poppins-v24-latin-700.woff2') format('woff2'); 
-  font-weight: 700; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Poppins'; 
-  src: url('Fonts/poppins-v24-latin-800.woff2') format('woff2'); 
-  font-weight: 800; font-style: normal; font-display: swap; 
-}
-@font-face { 
-  font-family: 'Poppins'; 
-  src: url('Fonts/poppins-v24-latin-900.woff2') format('woff2'); 
-  font-weight: 900; font-style: normal; font-display: swap; 
-}
+    /* --- POPPINS (Überschriften) --- */
+    @font-face { 
+      font-family: 'Poppins'; 
+      src: url('Fonts/poppins-v24-latin-regular.woff2') format('woff2'); 
+      font-weight: 400; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Poppins'; 
+      src: url('Fonts/poppins-v24-latin-600.woff2') format('woff2'); 
+      font-weight: 600; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Poppins'; 
+      src: url('Fonts/poppins-v24-latin-700.woff2') format('woff2'); 
+      font-weight: 700; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Poppins'; 
+      src: url('Fonts/poppins-v24-latin-800.woff2') format('woff2'); 
+      font-weight: 800; font-style: normal; font-display: swap; 
+    }
+    @font-face { 
+      font-family: 'Poppins'; 
+      src: url('Fonts/poppins-v24-latin-900.woff2') format('woff2'); 
+      font-weight: 900; font-style: normal; font-display: swap; 
+    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -86,7 +89,7 @@
       --accent-soft: color-mix(in srgb, var(--theme-blue) 12%, transparent);
       --accent-glow: color-mix(in srgb, var(--theme-blue) 30%, transparent);
       --accent-gradient: linear-gradient(135deg, #0a4a80, #1a6fb5);
-      
+
       --c-blue: #0ea5e9;
       --c-amber: #d97706;
       --c-green: #059669;
@@ -99,31 +102,31 @@
       --bg-grad-2: #e0f2fe; 
       --bg-grad-3: #f8fafc; 
       --bg-grad-4: #eef2ff; 
-      
+
       --glass-bg: rgba(255, 255, 255, 0.65);
       --glass-border: rgba(255, 255, 255, 0.9);
       --glass-shadow: 0 10px 40px rgba(15, 23, 42, 0.05); 
       --glass-hover: 0 15px 45px rgba(26, 111, 181, 0.12);
-      
+
       --text-main: #0f172a;
       --text-dim: #334155;
       --text-muted: #64748b;
-      
+
       --sidebar-bg: rgba(255, 255, 255, 0.95);
       --sidebar-active: var(--accent-soft);
-      
+
       --hero-bg: linear-gradient(135deg, #0a4a80 0%, #1a6fb5 100%);
       --hero-border: transparent;
-      
+
       --card-bg: rgba(255, 255, 255, 0.75);
       --card-border: rgba(255, 255, 255, 0.9);
       --table-hover: var(--accent-soft);
       --modal-bg: rgba(255, 255, 255, 0.98);
-      
+
       --grad-1: rgba(26, 111, 181, 0.12);   
       --grad-2: rgba(14, 165, 233, 0.18);  
       --grad-3: rgba(139, 92, 246, 0.12);  
-      
+
       --sidebar-width: 320px;
       --radius: 24px;
       --radius-sm: 16px;
@@ -139,7 +142,7 @@
       --accent-soft: color-mix(in srgb, var(--theme-blue) 15%, transparent);
       --accent-glow: color-mix(in srgb, var(--theme-blue) 35%, transparent);
       --accent-gradient: linear-gradient(135deg, #0284c7, #38bdf8);
-      
+
       --c-blue: #7dd3fc;
       --c-amber: #fbbf24;
       --c-green: #34d399;
@@ -152,25 +155,25 @@
       --bg-grad-2: #041222; 
       --bg-grad-3: #0a192f; 
       --bg-grad-4: #020617; 
-      
+
       --glass-bg: rgba(15, 23, 42, 0.65);
       --glass-border: rgba(255, 255, 255, 0.1);
       --glass-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
       --glass-hover: 0 20px 60px rgba(56, 189, 248, 0.15); 
-      
+
       --text-main: #f8fafc;
       --text-dim: #cbd5e1;
       --text-muted: #94a3b8;
-      
+
       --sidebar-bg: rgba(2, 6, 23, 0.95);
-      
+
       --hero-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(2, 6, 23, 0.85) 100%);
       --hero-border: rgba(255, 255, 255, 0.08);
-      
+
       --card-bg: rgba(30, 41, 59, 0.65);
       --card-border: rgba(255, 255, 255, 0.08);
       --modal-bg: rgba(15, 23, 42, 0.98);
-      
+
       --grad-1: rgba(56, 189, 248, 0.20);   
       --grad-2: rgba(14, 165, 233, 0.20);  
       --grad-3: rgba(167, 139, 250, 0.15);  
@@ -259,6 +262,7 @@
     .c-purple { color: var(--c-purple) !important; }
     .c-pink { color: var(--c-pink) !important; }
     .c-red { color: var(--c-red) !important; }
+    .c-muted { color: var(--text-muted) !important; }
 
     .bg-c-red { background: color-mix(in srgb, var(--c-red) 15%, transparent) !important; border-color: color-mix(in srgb, var(--c-red) 30%, transparent) !important; }
     .bg-c-blue { background: color-mix(in srgb, var(--c-blue) 15%, transparent) !important; border-color: color-mix(in srgb, var(--c-blue) 30%, transparent) !important; }
@@ -346,12 +350,12 @@
       background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); 
       border-radius: 50%; z-index: 0; pointer-events: none;
     }
-    
+
     .hero-content { position: relative; z-index: 1; display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; max-width: 1000px; }
     .hero-text { flex: 1; min-width: 300px; }
     .hero-breadcrumb { font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 1.25rem; letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase; }
     .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 900; margin-bottom: 1.25rem; text-shadow: 0 4px 20px rgba(0,0,0,0.2); letter-spacing: -0.02em; }
-    
+
     .hero-title em { 
       font-family: var(--font-hand); 
       font-weight: 400;
@@ -381,7 +385,7 @@
     .format-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
     .format-card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: var(--radius-sm); box-shadow: var(--glass-shadow); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; cursor: pointer; }
     .format-card:hover { box-shadow: 0 15px 40px var(--accent-glow); border-color: var(--accent); transform: translateY(-3px); }
-    
+
     .format-card-header { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.5rem; }
     .format-card-header .emoji { font-size: 1.6rem; flex-shrink: 0; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid transparent; transition: all 0.3s; }
     .format-card-header .text-content { flex: 1; }
@@ -389,15 +393,16 @@
     .format-card-header .label { font-size: 1.15rem; font-family: var(--font-display); font-weight: 800; color: var(--text-main); margin-bottom: 0.3rem; line-height: 1.3; }
     .format-card-header .desc { font-size: 0.95rem; color: var(--text-dim); font-weight: 500; line-height: 1.5; }
     .format-card-header .chevron { color: var(--text-muted); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); flex-shrink: 0; margin-top: 0.2rem; }
-    
+
     .format-card.open { border-color: var(--accent); box-shadow: 0 10px 30px var(--accent-glow); }
     .format-card.open .format-card-header .chevron { transform: rotate(180deg); color: var(--accent); }
-    
+
     .format-card-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .format-card-body.always-open { max-height: none; overflow: visible; }
     .format-card-body-inner { padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 1.5rem; }
     .format-card-body-inner p { font-size: 0.95rem; font-weight: 500; color: var(--text-dim); line-height: 1.75; margin-bottom: 1rem; }
     .format-card-body-inner h4 { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin: 1.5rem 0 0.8rem; }
-    
+
     .tip-refs { display: flex; flex-direction: column; gap: 0.6rem; }
     .tip-refs a { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.4rem 0.8rem; background: var(--accent-soft); border-radius: 8px; border: 1px solid var(--accent-glow); transition: all 0.2s; align-self: flex-start; }
     .tip-refs a:hover { background: var(--accent); color: white; transform: translateX(4px); }
@@ -410,14 +415,14 @@
     .download-card { display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
     .download-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--accent-gradient); opacity: 0; z-index: -1; transition: opacity 0.3s; }
     .download-card:hover { box-shadow: 0 15px 35px var(--accent-glow); border-color: var(--accent); transform: translateY(-5px); }
-    
+
     .download-card .card-top { display: flex; align-items: center; gap: 1rem; }
     .download-card .icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid transparent; transition: all 0.3s; }
     .download-card .card-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-muted); }
-    
+
     .download-card .title { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--text-main); line-height: 1.3; }
     .download-card .desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; flex: 1; font-weight: 500; }
-    
+
     .download-card .action { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--accent); transition: all 0.3s; margin-top: auto; }
     .download-card:hover .action { transform: translateX(6px); }
 
@@ -431,23 +436,51 @@
     .study-card .link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 700; color: var(--accent); text-decoration: none; transition: transform 0.2s; }
     .study-card .link:hover { transform: translateX(4px); }
 
-    .ethics-box {
-      background: var(--accent-soft);
-      border-left: 4px solid var(--accent);
-      padding: 1.5rem;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin: 2rem 0;
-      font-size: 0.95rem;
+    .ethics-highlight {
+      margin-top: 2rem;
+      border: 1px solid color-mix(in srgb, var(--c-red) 38%, transparent);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--c-red) 16%, transparent), transparent 40%),
+        var(--card-bg);
+      box-shadow: var(--glass-shadow);
+      overflow: hidden;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
     }
 
-    .ethics-box p {
-      margin-bottom: 1rem;
-      color: var(--text-dim);
-      line-height: 1.75;
+    .ethics-highlight-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.6rem 1.6rem 1.2rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .ethics-highlight-header .emoji {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+    }
+
+    .ethics-highlight-body {
+      padding: 1.6rem;
+    }
+
+    .ethics-highlight-body p {
+      font-size: 0.97rem;
       font-weight: 500;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 1rem;
     }
 
-    .ethics-box p:last-child {
+    .ethics-highlight-body p:last-child {
       margin-bottom: 0;
     }
 
@@ -463,26 +496,21 @@
       margin: 0 auto;
       padding: 3rem;
       color: var(--text-muted);
+      font-size: 0.9rem;
       font-weight: 500;
     }
 
     .footer-title {
       font-family: var(--font-display);
-      font-weight: 800;
       color: var(--text-main);
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .footer-subtitle,
-    .footer-ref {
-      font-size: 0.9rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
     }
 
     .footer hr {
       border: none;
       border-top: 1px solid var(--glass-border);
-      margin: 1.5rem 0;
+      margin: 1.25rem 0;
     }
 
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
@@ -508,7 +536,7 @@
       .main.expanded { margin-left: 0; }
       .hero { padding: 7rem 2rem 4rem; }
       .hero-content { gap: 2rem; justify-content: center; text-align: center; }
-      
+
       .hero-title em { 
         display: block; 
         padding-left: 0; 
@@ -525,6 +553,7 @@
       .section-nav { padding: 0 1.5rem; }
       .study-card { grid-template-columns: 1fr; gap: 1rem; }
       .study-year { justify-self: start; }
+      .ethics-highlight-header { flex-direction: column; }
     }
   </style>
 </head>
@@ -564,7 +593,7 @@
       <a href="#tools"><i data-lucide="wrench" class="nav-icon c-purple"></i> KI-Werkzeuge</a>
       <a href="#ki-ethik"><i data-lucide="scale" class="nav-icon c-red"></i> KI-Ethik</a>
       <a href="#simulationen"><i data-lucide="laptop" class="nav-icon c-green"></i> Simulationen</a>
-      
+
       <div class="nav-label" style="margin-top: 1rem;">Rechtliches</div>
       <a href="#impressum"><i data-lucide="shield" class="nav-icon c-muted"></i> Impressum</a>
     </nav>
@@ -575,7 +604,7 @@
   </aside>
 
   <main class="main" id="main-content">
-    
+
     <header class="hero">
       <div class="hero-content">
         <div class="hero-text">
@@ -606,9 +635,9 @@
           <h2 class="section-title">Praktische Tipps</h2>
         </div>
         <p class="section-intro">Auf eine Karte klicken für mehr Details und konkrete Literaturverweise aus der aktuellen Fachdidaktik.</p>
-        
+
         <div class="format-grid">
-          
+
           <div class="format-card reveal" onclick="toggleFormat(this)">
             <div class="format-card-header">
               <div class="emoji bg-c-blue c-blue"><i data-lucide="users"></i></div>
@@ -825,7 +854,7 @@
             <p class="desc">Vom ersten Prompt zur rechtssicheren Web-App: Lerne, wie man KI-generierten Code nicht nur erzeugt, sondern als Architekt und Kurator versteht und prüft.</p>
             <span class="action">Öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
           </a>
-          
+
           <a class="download-card reveal" href="https://1drv.ms/b/c/40c2f599c46c5bbd/IQB8d6Apt1UERJBQOkp2y8-_ATBvaU3YR9W7a42_1ULfjYU?e=mKpT7W" target="_blank" rel="noopener">
             <div class="card-top">
               <div class="icon bg-c-blue c-blue"><i data-lucide="presentation"></i></div>
@@ -885,7 +914,7 @@
             <p class="desc">Erstellung professioneller Dokumente mit LaTeX und KI – von Installation bis zur fertigen Klausur.</p>
             <span class="action">Öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
           </a>
-          
+
           <a class="download-card reveal" href="materialien/leitfaden_lokale_ki.pdf" target="_blank" rel="noopener">
             <div class="card-top">
               <div class="icon bg-c-green c-green"><i data-lucide="shield-check"></i></div>
@@ -895,7 +924,7 @@
             <p class="desc">Schritt-für-Schritt-Anleitung zur Installation via Docker. Erfahre, wie du Modelle wie <strong>Qwen 3</strong> lokal und datenschutzkonform betreibst.</p>
             <span class="action">Leitfaden öffnen <i data-lucide="arrow-right" class="nav-icon"></i></span>
           </a>
-          
+
         </div>
       </section>
 
@@ -905,7 +934,7 @@
           <h2 class="section-title">Aktuelle Forschung</h2>
         </div>
         <div class="studies-grid">
-          
+
           <div class="study-card reveal">
             <div class="study-year">2023</div>
             <div>
@@ -1093,19 +1122,35 @@
 
         </div>
 
-        <div class="ethics-box reveal">
-          <p>
-            <strong><i data-lucide="link" style="vertical-align: middle; margin-right: 5px;"></i> Auffällige Übereinkunft:</strong><br>
-            Obwohl die beiden Veröffentlichungen aus sehr unterschiedlichen Denktraditionen stammen, berühren sie sich in zentralen Punkten. Beide wenden sich gegen eine naive Fortschrittserzählung, in der KI als fast automatisch heilbringende Technologie erscheint. Beide betonen, dass die entscheidende Frage nicht nur lautet, was KI technisch leisten kann, sondern wem sie nützt, wer sie kontrolliert und welche gesellschaftlichen Strukturen durch sie verstärkt werden.
-          </p>
+        <div class="ethics-highlight reveal">
+          <div class="ethics-highlight-header">
+            <div class="emoji bg-c-red c-red"><i data-lucide="scale"></i></div>
+            <div class="text-content">
+              <span class="tip-meta c-red">Ethische Einordnung</span>
+              <h3 class="label">Eine überraschende Übereinstimmung</h3>
+              <p class="desc">
+                Mühlhoffs politische Kritik und die Enzyklika <em>Magnifica Humanitas</em> kommen aus sehr unterschiedlichen Denktraditionen. Dennoch treffen sie sich in zentralen Punkten.
+              </p>
+            </div>
+          </div>
 
-          <p>
-            Mühlhoff formuliert diese Kritik politisch: KI darf nicht zum Instrument privater Machtkonzentration oder autoritärer Steuerung werden. Die Enzyklika formuliert denselben Grundgedanken theologisch und sozialethisch: Technik muss dem Menschen dienen, insbesondere den Schwächeren, und darf nicht dem unmittelbaren Vorteil weniger untergeordnet werden.
-          </p>
+          <div class="ethics-highlight-body">
+            <p>
+              Beide Veröffentlichungen wenden sich gegen eine naive Fortschrittserzählung, in der Künstliche Intelligenz fast automatisch als heilbringende Technologie erscheint. Die entscheidende Frage lautet in beiden Texten nicht nur, was KI technisch leisten kann, sondern wem sie nützt, wer sie kontrolliert und welche gesellschaftlichen Strukturen durch sie verstärkt werden.
+            </p>
 
-          <p>
-            Gerade für Schule und Unterricht ist diese Übereinstimmung wichtig. KI-Kompetenz bedeutet daher nicht nur, Werkzeuge bedienen zu können. Schülerinnen und Schüler sollten auch verstehen, dass KI immer in ökonomische, politische und moralische Zusammenhänge eingebettet ist. Eine verantwortliche Nutzung setzt kritische Distanz, demokratische Kontrolle und die Frage nach Menschenwürde und Gerechtigkeit voraus.
-          </p>
+            <p>
+              Rainer Mühlhoff formuliert diese Kritik politisch. KI darf nicht zum Instrument privater Machtkonzentration, autoritärer Steuerung oder demokratisch kaum kontrollierter Plattformmacht werden. Seine Warnung richtet sich besonders gegen eine Verbindung von technologischem Heilsdenken, ökonomischer Macht und autoritären Fantasien.
+            </p>
+
+            <p>
+              Die Enzyklika <em>Magnifica Humanitas</em> formuliert denselben Grundgedanken theologisch und sozialethisch. Technik muss dem Menschen dienen, insbesondere den Schwächeren. Sie darf nicht dem kurzfristigen Vorteil weniger untergeordnet werden, sondern muss am Gemeinwohl, an der Würde des Menschen und an der Verantwortung gegenüber künftigen Generationen gemessen werden.
+            </p>
+
+            <p>
+              Gerade für Schule und Unterricht ist diese Übereinstimmung wichtig. KI-Kompetenz bedeutet daher nicht nur, Werkzeuge bedienen zu können. Schülerinnen und Schüler sollten auch verstehen, dass KI immer in ökonomische, politische und moralische Zusammenhänge eingebettet ist. Verantwortliche Nutzung setzt kritische Distanz, demokratische Kontrolle und die Frage nach Menschenwürde und Gerechtigkeit voraus.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -1114,18 +1159,18 @@
           <span class="section-num">06 —</span>
           <h2 class="section-title">Interaktive Simulationen</h2>
         </div>
-        
+
         <p class="section-intro reveal">
           Interaktive Simulationen und kleine Lern-Apps lassen sich heute ohne Programmierkenntnisse erstellen – direkt im Chat mit Claude oder Gemini. 
           Das Ergebnis ist stets eine einzelne HTML-Datei, die sofort im Browser läuft.
         </p>
-        
+
         <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 2rem 0; font-size: 0.95rem;" class="reveal">
           <p style="margin-bottom: 1rem;">
             <strong><i data-lucide="lock" style="vertical-align: middle; margin-right: 5px;"></i> Zugang & Passwort:</strong><br>
             Einige der hier verlinkten Simulationen sind passwortgeschützt. Das Passwort zum Öffnen lautet: <code style="background: var(--glass-bg); padding: 2px 6px; border-radius: 4px; font-weight: 800; color: var(--accent);">Zugang</code>
           </p>
-          
+
           <p style="margin-bottom: 1rem;">
             <strong><i data-lucide="eye-off" style="vertical-align: middle; margin-right: 5px;"></i> Datenschutz-Transparenz:</strong><br>
             Bitte beachten Sie, dass beim Ausführen dieser Simulationen technisch bedingt Daten (wie Ihre IP-Adresse) an externe Server (z. B. Google Fonts) übertragen werden können. 
@@ -1210,7 +1255,7 @@
           <span class="section-num">07 —</span>
           <h2 class="section-title">Rechtliches</h2>
         </div>
-        
+
         <div class="impressum-grid">
           <div class="impressum-card reveal">
             <h3>Impressum</h3>
@@ -1265,11 +1310,11 @@
       document.body.classList.toggle('dark');
       localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
     });
-    
+
     if (localStorage.getItem('theme') === 'dark') {
-      document.body.classList.add('dark');
+        document.body.classList.add('dark');
     } else if (localStorage.getItem('theme') === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.classList.add('dark');
+        document.body.classList.add('dark');
     }
 
     const sidebarBtn = document.getElementById('sidebarToggle');
@@ -1305,12 +1350,12 @@
     function toggleFormat(card) {
       const body = card.querySelector('.format-card-body');
       const isOpen = card.classList.contains('open');
-      
+
       document.querySelectorAll('.format-card.open').forEach(c => {
         c.classList.remove('open');
         c.querySelector('.format-card-body').style.maxHeight = null;
       });
-      
+
       if (!isOpen) {
         card.classList.add('open');
         body.style.maxHeight = body.scrollHeight + 'px';
@@ -1338,10 +1383,10 @@
       let current = '';
       sections.forEach(s => { 
         if (window.scrollY >= s.offsetTop - 200) {
-          current = s.id; 
+            current = s.id; 
         }
       });
-      
+
       sidebarLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
       sectionNavLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
     }
@@ -1350,7 +1395,7 @@
     handleScroll();
 
     sidebarLinks.forEach(l => l.addEventListener('click', () => { 
-      if (window.innerWidth <= 900) toggleSidebar(); 
+        if (window.innerWidth <= 900) toggleSidebar(); 
     }));
 
     const revealElements = document.querySelectorAll('.reveal');
@@ -1364,16 +1409,17 @@
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
     revealElements.forEach(el => revealObserver.observe(el));
-    
+
     setTimeout(() => {
-      revealElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight) {
-          el.classList.add('visible');
-          revealObserver.unobserve(el);
-        }
-      });
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            }
+        });
     }, 100);
+
   </script>
 </body>
 </html>
